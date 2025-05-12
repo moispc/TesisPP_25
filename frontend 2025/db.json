@@ -1,0 +1,174 @@
+{
+  "products": [
+    {
+      "id": "QNFTNGQ",
+      "image": {
+        "imageURL": "assets/carta/arabes.webp",
+        "imageAlt": "empanadas arabes.",
+        "thumbnail": "assets/carta/arabes_thumbnail.webp"
+      },
+      "nombre_producto": "Empanadas Arabes",
+      "descripcion": "Masa rellena de una mezcla de carne picada, cebolla, tomate, perejil y especias.",
+      "precio": 570
+    },
+    {
+      "id": "XLLC2L1",
+      "image": {
+        "imageURL": "assets/carta/criolla.webp",
+        "imageAlt": "empanada criolla.",
+        "thumbnail": "assets/carta/criolla_tumbnail.webp"
+      },
+      "nombre_producto": "Empanadas Criollas",
+      "descripcion": "Empanada jugosa picante y rellena de carne, huevo duro, aceitunas y ají",
+      "precio": 570
+    },
+    {
+      "id": "9J7J9CU",
+      "image": {
+        "imageURL": "assets/carta/j&q.webp",
+        "imageAlt": "empanadas de jamon y queso.",
+        "thumbnail": "assets/carta/j&q_thumbnail.webp"
+      },
+      "nombre_producto": "Empanadas de J&Q",
+      "descripcion": "Masa rellena con jamón y queso muzarella.",
+      "precio": 570
+    },
+    {
+      "id": "LKFSQ6L",
+      "image": {
+        "imageURL": "assets/carta/hamburguesa.webp",
+        "imageAlt": "Hamburguesa.",
+        "thumbnail": "assets/carta/hamburguesa_thumbnail.webp"
+      },
+      "nombre_producto": "Hamburguesa",
+      "descripcion": "Burger, tomate, lechuga, cebolla morada, morrón, queso, chimi y mayonesa casera.",
+      "precio": 3800
+    },
+    {
+      "id": "263BEO3",
+      "image": {
+        "imageURL": "assets/carta/lomito.webp",
+        "imageAlt": "Lomito.",
+        "thumbnail": "assets/carta/lomito_thumbnail.webp"
+      },
+      "nombre_producto": "Lomito",
+      "descripcion": "Bife de lomo, tomate, lechuga, jamón, queso, huevo y mayonesa casera.",
+      "precio": 4500
+    }
+  ],
+  "comentarios": [
+    {
+      "nombre": "Usuario1",
+      "fecha": "2023-09-13",
+      "calificacion": 5,
+      "comentario": "'¡Las hamburguesas aquí son increíbles! Siempre vuelvo por la hamburguesa de queso cheddar, es la mejor que he probado.'"
+    },
+    {
+      "nombre": "Usuario2",
+      "fecha": "2023-09-12",
+      "calificacion": 4,
+      "comentario": "'Buena comida a un precio razonable. Las papas fritas son deliciosas y el tamaño de las hamburguesas está bueno.'"
+    },
+    {
+      "nombre": "Usuario3",
+      "fecha": "2023-09-10",
+      "calificacion": 5,
+      "comentario": "'¡Este lugar es genial! Las hamburguesas son muy ricas y el personal es amable.'"
+    },
+    {
+      "nombre": "Usuario4",
+      "fecha": "2023-09-08",
+      "calificacion": 3,
+      "comentario": "'Las hamburguesas son buenas. Tienen bastante variedad.'"
+    },
+    {
+      "nombre": "Usuario5",
+      "fecha": "2023-09-05",
+      "calificacion": 5,
+      "comentario": "'¡Me encanta porque están bien cocidas y la demora no es mucha'"
+    }
+  ],
+  "infoDevelopers": [
+    {
+      "id": "85XB5Y",
+      "name": "Verónica Lúdemann",
+      "img": "assets/developers/vero.webp",
+      "linkedin": "http://www.linkedin.com/in/veronica-ludemann",
+      "github": "https://github.com/veroludemann",
+      "portfolio": ""
+    },
+    {
+      "id": "8F33UL",
+      "name": "Tiziano Mina",
+      "img": "assets/developers/tizi.webp",
+      "linkedin": "https://www.linkedin.com/in/tiziano-mina/",
+      "github": "",
+      "portfolio": "https://tiziano-mina.netlify.app/"
+    },
+    {
+      "id": "3JS2P1",
+      "name": "Gisele Lavisse",
+      "img": "assets/developers/gi.webp",
+      "linkedin": "https://www.linkedin.com/in/gisele-lavisse-934540246/",
+      "github": "https://github.com/gigilvs",
+      "portfolio": ""
+    },
+    {
+      "id": "RUC42Y",
+      "name": "Rocio Garzón",
+      "img": "assets/developers/ro.webp",
+      "linkedin": "",
+      "github": "https://github.com/RoquinG",
+      "portfolio": ""
+    },
+    {
+      "id": "A8O3KO",
+      "name": "Nicolás Luna",
+      "img": "assets/developers/nico.webp",
+      "linkedin": "https://www.linkedin.com/in/nicolas-luna-632612106/",
+      "github": "https://github.com/NicolasLuna12",
+      "portfolio": ""
+    },
+    {
+      "id": "LUW6LM",
+      "name": "Javier Garcia",
+      "img": "assets/developers/javi.webp",
+      "linkedin": "https://www.linkedin.com/in/garcialuisjavier/",
+      "github": "https://github.com/xavi-garcia",
+      "portfolio": ""
+    },
+    {
+      "id": "SZWGR4",
+      "name": "Diego Guzmán",
+      "img": "assets/developers/die.webp",
+      "linkedin": "https://www.linkedin.com/in/diego-guzm%C3%A1n-cerveux/",
+      "github": "https://github.com/cerveux",
+      "portfolio": "https://cerveux.dev.ar/"
+    },
+    {
+      " id": "IVRK6C",
+      "name": "Jimena Galleguillo",
+      "img": "assets/developers/jime.webp",
+      "linkedin": "",
+      "github": "https://github.com/Jimenna",
+      "portfolio": ""
+    }
+  ],
+  "users": [
+    {
+      "nombre": "Cristian",
+      "mail": "kronomio_cl87@htmail.com",
+      "telefono": "3541653254",
+      "password": "Cris2609",
+      "id_usuario": "kronomio"
+    },
+    {
+      "id": "7c6e",
+      "nombre": "Cristian2",
+      "mail": "kronomio_cl87@htmail.com",
+      "telefono": "3541653254",
+      "password": "Cris2609",
+      "id_usuario": "kronomio"
+    }
+  ]
+}

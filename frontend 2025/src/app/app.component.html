@@ -1,0 +1,12 @@
+<app-carrito></app-carrito>
+<button *ngIf="estaAutenticado && esAdmin" class="btn-switch-vista" [class.vista-usuario]="vistaUsuario" (click)="setVistaUsuario(!vistaUsuario)">
+  <span class="icono">
+    <i class="bi" [ngClass]="vistaUsuario ? 'bi-person-fill' : 'bi-shield-lock-fill'"></i>
+  </span>
+  <span class="texto">{{ vistaUsuario ? 'Vista usuario' : 'Vista admin' }}</span>
+</button>
+<app-nav [vistaUsuario]="vistaUsuario"></app-nav>
+<router-outlet></router-outlet>
+<app-footer></app-footer>
+
+

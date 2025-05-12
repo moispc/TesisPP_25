@@ -1,0 +1,43 @@
+.card-container {
+  max-width: 600px;
+  margin: auto;
+}
+.card img {
+  width: 50px;
+  height: auto;
+}
+
+/* Mejora estilos de los radio buttons */
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.form-check-label {
+  cursor: pointer;
+}
+
+/* Spinner de carga */
+.spinner-border {
+  margin-right: 8px;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 576px) {
+  .card-container {
+    padding: 0 10px;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .form-check {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .form-check img {
+    margin-top: 10px;
+  }
+}

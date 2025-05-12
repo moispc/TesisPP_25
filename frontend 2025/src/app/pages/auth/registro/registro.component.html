@@ -1,0 +1,191 @@
+<div>
+  <main class="container">
+    <div class="contenedor__todo row mt-5">
+      <div class="contenedor__todo row">
+        <div
+          class="caja__principal col-12 col-md-6 px-0 order-1 order-md-2 mb-4"
+        >
+          <div class="caja__principal-registro bg-color-secundario p-3 inter">
+            <h2>¿Aún no tienes cuenta?</h2>
+            <h4>
+              Registrate en el siguiente formulario para que puedas iniciar
+              sesión
+            </h4>
+          </div>
+        </div>
+
+        <div
+          class="contenedor__registro col-12 col-md-6 bg-color-primario rounded-4 order-2 order-md-1"
+        >
+          <form
+            [formGroup]="form"
+            class="formulario__Registro"
+            (ngSubmit)="onEnviar($event)"
+            
+          >
+            <h2 class="text-color-terciario inter text-center my-4">
+              Registrarse
+            </h2>
+
+            <div class="mb-3">
+              <input
+                type="text"
+                formControlName="nombre"
+                class="form-control"
+                name="nombre"
+                id="nombre"
+                placeholder="Nombre"
+              />
+
+              @if(Nombre?.errors && Nombre?.touched) {
+              @if(Nombre?.hasError('required')) {
+              <p class="text-danger">El nombre es requerido</p>
+              } }
+            </div>
+
+            <div class="mb-3 input-container">
+              <input
+                type="text"
+                formControlName="apellido"
+                class="form-control"
+                name="apellido"
+                id="apellido"
+                data-tipo="apellido"
+                placeholder="apellido"
+              />
+              @if(Apellido?.errors && Apellido?.touched) {
+              @if(Apellido?.hasError('required')) {
+              <p class="text-danger">El usuario es requerido</p>
+              } }
+            </div>
+
+            <div class="mb-3 input-container">
+              <input
+                class="form-control input"
+                formControlName="email"
+                name="email"
+                id="email"
+                type="email"
+                placeholder="Correo electrónico"
+              />
+              @if(Email?.errors && Email?.touched) {
+              @if(Email?.hasError('required')) {
+              <p class="text-danger">El correo electrónico es requerido</p>
+              } @else if(Email?.hasError('email') ){
+              <p class="text-danger">Ingrese un mail válido</p>}
+              }
+              @if(emailExistente){
+              <p class="text-danger" >El correo electrónico ya está registrado.</p>
+              } 
+            </div>
+
+            <div class="mb-3 input-container">
+              <input
+                class="form-control input"
+                name="telefono"
+                formControlName="telefono"
+                id="telefono"
+                type="text"
+                placeholder="Teléfono"
+                data-tipo="phone"
+                pattern="\d{10}"
+              />
+              @if(Telefono?.errors && Telefono?.touched) {
+              @if(Telefono?.hasError('required')) {
+              <p class="text-danger">El teléfono es requerido</p>
+              } @else if(Telefono?.hasError('minlength') ||
+              Telefono?.hasError('maxlength')|| Telefono?.hasError('pattern') ){
+              <p class="text-danger">Ingrese un número de teléfono válido.</p>
+              } }
+            </div>
+
+            <div class="mb-3 input-container">
+              <input
+                class="form-control input"
+                formControlName="password"
+                name="password"
+                id="password"
+                type="password"
+                placeholder="Contraseña nueva"
+                data-tipo="password"
+                autocomplete="new-password"
+              />
+              @if(Password?.errors && Password?.touched) {
+              @if(Password?.hasError('required')) {
+              <p class="text-danger">La contraseña no puede estar vacia.</p>
+              } @else if(Password?.hasError('minlength') ||
+              Password?.hasError('maxlength')){
+              <p class="text-danger">
+                Su contraseña tiene que tener al menos 8 caracteres.
+              </p>
+
+              } }
+            </div>
+
+            <div class="mb-3 input-container">
+              <input
+                class="form-control input"
+                formControlName="checkPassword"
+                name="check"
+                id="check"
+                type="password"
+                placeholder="Repita contraseña"
+                data-tipo="check"
+                aria-describedby="passwordHelpBlock"
+              />
+              @if(CheckPassword?.errors && CheckPassword?.touched) {
+
+              <p class="text-danger">Las contraseñas no coinciden.</p>
+              }
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button
+                class="btn bg-color-secundario my-3 inter"
+                id="btn-registro"
+                type="submit"
+              >
+                Registrarse
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div
+  class="modal fade"
+  id="msgModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1
+          class="modal-title fs-5 text-color-secundario"
+          id="exampleModalLabel"
+        >
+          Error
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="inter text-color-cuaternario" id="back-response"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

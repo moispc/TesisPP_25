@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
+
+section{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-left: -130px;
+}
+
+.chart-wrap {
+    --chart-width:420px;
+    --bar-color:#140075;
+    --bar-thickness:40px;
+    --bar-rounded: 3px;
+    --bar-spacing:10px;
+    font-family: 'Ubuntu Sans';
+    width:var(--chart-width);
+    margin-left: 200px;
+}
+
+.chart-wrap .title{
+    font-weight:bold;
+    padding:1.8em 0;
+    text-align:center;
+    white-space:nowrap;
+}
+
+.chart-wrap.horizontal .grid{
+    transform:rotate(-90deg);
+}
+
+.chart-wrap.horizontal .bar::after{
+    transform: rotate(90deg);
+    padding-left: -40px;
+    display: block;
+    font-family: 'Ubuntu Sans';
+}
+
+.chart-wrap .grid{
+    margin-left:50px;
+    position:relative;
+    padding:5px 0 5px 0;
+    height:100%;
+    width:100%;
+    border-left:2px solid var(--grid-color);
+}
+
+.chart-wrap .grid::before{
+    font-size:0.8em;
+    font-weight:bold;
+    content:'0%';
+    position:absolute;
+    left:-0.5em;
+    top:-1.5em;
+}
+.chart-wrap .grid::after{
+    font-size:0.8em;
+    font-weight:bold;
+    content:'100%';
+    position:absolute;
+    right:-1.5em;
+    top:-1.5em;
+}
+
+.chart-wrap.horizontal .grid::before, .chart-wrap.horizontal .grid::after {
+    transform: rotate(90deg);
+}
+
+.chart-wrap .bar {
+    width: var(--bar-value);
+    height:var(--bar-thickness);
+    margin:var(--bar-spacing) 0;
+    background-color:var(--bar-color);
+    border-radius:0 var(--bar-rounded) var(--bar-rounded) 0;
+}
+
+.chart-wrap .bar:hover{
+    opacity:0.7;
+}
+
+.chart-wrap .bar::after{
+    content:attr(data-name);
+    margin-left:100%;
+    padding:10px;
+    display:inline-block;
+    white-space:nowrap;
+}

@@ -1,0 +1,140 @@
+<body>
+  <header class="header_basic">
+    <div class="container">
+      <nav class="navbar navbar-dark navbar-expand-md nav_barra">
+        <div class="navbar container container-fluid" data-bs-theme="dark">
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img
+              src="assets/logo_v2.png"
+              style="max-width: 120px"
+              alt="logo_food"
+            />
+            <a href="https://github.com/moispc/Mobile" target="_blank" class="btn btn-warning ms-3 d-flex align-items-center" style="border-radius: 50px; font-size: 1.1rem; padding: 0.4rem 1.2rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.3rem" height="1.3rem" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5A1.5 1.5 0 0 0 2.5 14h11a.5.5 0 0 0 1.5-1.5V10.4a.5.5 0 0 1 1 0v2.1A2.5 2.5 0 0 1 13.5 15h-11A2.5 2.5 0 0 1 0 12.5V10.4a.5.5 0 0 1 .5-.5z"/>
+                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+              </svg>
+              ¡Descarga nuestra app!
+            </a>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse ms-auto"
+            id="navbarSupportedContent"
+          >
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item text-center ">
+                <a class="nav-link active" aria-current="page" href="index.html">
+                  Inicio
+                </a>
+              </li>
+              <li *ngIf="(!isAdmin() || vistaUsuario)" class="nav-item text-center ">
+                <a class="nav-link" routerLink="/quienes-somos">
+                  ¿Quienes somos?
+                </a>
+              </li>
+              <li *ngIf="(!isAdmin() || vistaUsuario)" class="nav-item text-center ">
+                <a class="nav-link" routerLink="/contacto">
+                  Contacto
+                </a>
+              </li>
+              <li *ngIf="(!isAdmin() || vistaUsuario)" class="nav-item text-center ">
+                <a class="nav-link" routerLink="/carta"> Carta </a>
+              </li>
+              <li *ngIf="estaAutenticado && (!isAdmin() || vistaUsuario)" class="nav-item text-center ">
+                <a class="nav-link" routerLink="/dashboard">
+                  Dashboard
+                </a>
+              </li>
+              <li *ngIf="estaAutenticado && isAdmin() && !vistaUsuario" class="nav-item text-center ">
+                <a class="nav-link" routerLink="/admin-productos">
+                  Gestión
+                </a>
+              </li>
+              <!-- Elemento para Mi Perfil (sin menú desplegable) -->
+              <li *ngIf="estaAutenticado" class="nav-item text-center">
+                <a class="nav-link d-flex align-items-center" routerLink="/perfil">
+                  <div class="nav-profile-img-container me-2">
+                    <img *ngIf="imagenPerfil" [src]="imagenPerfil" class="nav-profile-img" alt="Foto de perfil">
+                    <i *ngIf="!imagenPerfil" class="bi bi-person-circle"></i>
+                  </div>
+                  {{ nombreUsuario }}
+                </a>
+              </li>
+              <li *ngIf="!estaAutenticado" class="nav-item text-center">
+                <a
+                  class="btn btn-outline-light m-1 "
+                  id="nav-login"
+                  routerLink="/login"
+                >
+                  Login
+                </a>
+              </li>
+              <li *ngIf="!estaAutenticado" class="nav-item text-center">
+                <a
+                  class="btn btn-outline-light m-1 "
+                  id="nav-registro"
+                  routerLink="/registro"
+                >
+                  Registro
+                </a>
+              </li>
+              <li *ngIf="estaAutenticado" class="nav-item text-center">
+                <a
+                  class="btn btn-outline-light m-1 "
+                  id="nav-logout" (click)="logout()"
+                >
+                  Log Out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+</body>
+
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li *ngIf="!estaAutenticado" class="nav-item">
+          <a class="nav-link" routerLink="/home"  aria-current="page">HOME</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" aria-current="page">CONTACTO</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" routerLink="/carta" aria-current="page">CARTA</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" aria-current="page">DASHBOARD</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" routerLink="/pagar" aria-current="page">PAGAR</a>
+        </li>
+        <li *ngIf="!estaAutenticado" class="nav-item">
+          <a class="nav-link" aria-current="page">LOGIN</a>
+        </li>
+        <li *ngIf="!estaAutenticado" class="nav-item">
+          <a class="nav-link"  aria-current="page">REGISTRO</a>
+        </li>
+        <li *ngIf="estaAutenticado" class="nav-item">
+          <a class="nav-link"  aria-current="page">CERRAR SESIÓN</a>
+        </li>
+      </ul>
+    </div>
+
+<!-- <ng-template #viewHome>
+
+</ng-template> -->

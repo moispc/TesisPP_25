@@ -1,0 +1,107 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white">
+          <h3 class="mb-0"><i class="bi bi-person-circle me-2"></i>Mi Perfil</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="cargando" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+          </div>
+          
+          <div class="row" *ngIf="!cargando">
+            <!-- Imagen de perfil -->
+            <div class="col-md-4 text-center mb-4">
+              <div class="profile-image-container">
+                <img 
+                  [src]="imagenPerfil || 'assets/icons/user-default.png'" 
+                  alt="Imagen de perfil" 
+                  class="img-fluid rounded-circle profile-image mb-3" 
+                >
+                <div class="image-upload">
+                  <label for="file-input" class="btn btn-sm btn-secondary">
+                    <i class="bi bi-camera me-1"></i> Cambiar foto
+                  </label>
+                  <input 
+                    id="file-input" 
+                    type="file" 
+                    accept="image/*" 
+                    (change)="onImagenSeleccionada($event)"
+                    style="display: none;"
+                  >
+                </div>
+                <small *ngIf="imagenError" class="text-danger d-block mt-2">
+                  {{ imagenError }}
+                </small>
+              </div>
+            </div>
+            
+            <!-- Formulario de datos -->
+            <div class="col-md-8">
+              <form [formGroup]="perfilForm" (ngSubmit)="actualizarPerfil()">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                    <div class="text-danger" *ngIf="perfilForm.get('nombre')?.invalid && perfilForm.get('nombre')?.touched">
+                      El nombre es requerido
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" formControlName="apellido">
+                    <div class="text-danger" *ngIf="perfilForm.get('apellido')?.invalid && perfilForm.get('apellido')?.touched">
+                      El apellido es requerido
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" formControlName="email">
+                  <div class="text-danger" *ngIf="perfilForm.get('email')?.invalid && perfilForm.get('email')?.touched">
+                    Ingrese un email válido
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="telefono" class="form-label">Teléfono</label>
+                  <input type="tel" class="form-control" id="telefono" formControlName="telefono">
+                  <div class="text-danger" *ngIf="perfilForm.get('telefono')?.invalid && perfilForm.get('telefono')?.touched">
+                    El teléfono es requerido
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="direccion" class="form-label">Dirección de entrega</label>
+                  <textarea class="form-control" id="direccion" rows="3" formControlName="direccion"></textarea>
+                  <div class="text-danger" *ngIf="perfilForm.get('direccion')?.invalid && perfilForm.get('direccion')?.touched">
+                    La dirección es requerida
+                  </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button type="submit" class="btn btn-primary" [disabled]="perfilForm.invalid || cargando">
+                    <i class="bi bi-save me-1"></i> Guardar cambios
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-footer bg-dark text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <small>Última actualización: {{ cargando ? 'Cargando...' : (usuario.fechaActualizacion || 'No disponible') }}</small>
+            <button class="btn btn-outline-danger btn-sm" (click)="eliminarCuenta()">
+              <i class="bi bi-trash me-1"></i> Eliminar cuenta
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
