@@ -1,0 +1,161 @@
+<aside [class.collapsed]="!isVisible" class="cart-aside">
+  <div class="sidebar p-2 d-flex flex-column fixed-top">
+    <button
+      type="button"
+      class="btn-close colapse-sidebar ms-auto mb-5"
+      aria-label="Close"
+      (click)="cerrarSidebar()"
+    ></button>
+    <p class="fs-1 fw-bold title text-center">Mi Carrito</p>
+    @if (detallePedido.length!=0) {
+    <hr />
+    
+    
+    <p class="text-center lh-1 titleDireccion">Dirección de entrega:</p>
+    @if(direccion=='Sin especificar'){
+      <button
+      class="btn btn-secondary"
+      data-bs-toggle="modal"
+      data-bs-target="#modalCambioDireccion"
+    >
+      Añadir dirección
+    </button>
+    }
+    @else
+    {
+      
+    <p class="text-center lh-1 textDireccion" >{{direccion}} - {{info}} </p>
+    <button
+      class="btn btn-secondary"
+      data-bs-toggle="modal"
+      data-bs-target="#modalCambioDireccion"
+    >
+      Modificar
+    </button>
+  }
+}
+    <hr />
+    @if (detallePedido.length==0) {
+    <p class="h3 text-center title">El carrito está vacio.</p>
+    }
+    <div class="sidebar-items">
+      <ul class="shop-list" style="list-style-type: none">
+        <li
+          class="product-card bg-light position-relative rounded rounded-2 my-2"
+          *ngFor="let detalle of detallePedido"
+        >
+          <div class="card-content row">
+            <div class="img-container img-thumbnail col-5 align-items-center">
+              <img
+                class="object-fit-fill border rounded"
+                [src]="detalle.imageURL"
+                alt="{{ detalle.producto }}"
+                id="imageProducto"
+              />
+            </div>
+
+            <div class="product-info col-7">
+              <h5 class="">{{ detalle.producto }}</h5>
+              <hr />
+              <h6>Cantidad: {{ detalle.cantidad }}</h6>
+              <h6>Precio: $ {{ detalle.precio }}</h6>
+              <hr />
+              <h6 style="color: rgb(2, 54, 165)">
+                Subtotal: $ {{ detalle.precio * detalle.cantidad }}
+              </h6>
+              <button
+                type="button"
+                class="btn delete-icon"
+                (click)="eliminarDetalle(detalle)"
+              >
+                <li class="fas fa-trash-alt"></li>
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    @if (detallePedido.length!=0) {    <p class="h5 bg-info-subtle text-info-emphasis text-end total">
+      Total a abonar : $ {{ total
+      }}<a style="font-size: small">(iva Incluido)</a>
+    </p>
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <!-- <button type="button" class="btn btn-secondary">Vaciar Carrito</button> -->
+      <button type="button" class="btn btn-secondary" (click)="cerrarSidebar()">
+        Añadir + Productos
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-success"
+        (click)="irAPagar()" 
+      >
+        Confirmar Compra
+      </button>
+    </div>
+    }
+  </div>
+</aside>
+
+<!-- Modal de cambio de dirección -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  id="modalCambioDireccion"
+  aria-labelledby="modalCambioDireccion"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Domicilio de entrega</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
+          <div class="mb-3">
+            <label for="domicilio" class="form-label"
+              >Domicilio de entrega:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="domicilio"
+              placeholder="Ingrese su domicilio"
+              formControlName="domicilio"
+            />
+            @if(Domicilio?.errors && Domicilio?.touched) {
+              @if(Domicilio?.hasError('required')) {
+              <p class="text-danger">El domicilio es requerido</p>
+              } }
+          </div>
+          <div class="mb-3">
+            <label for="info" class="form-label">Información adicional:</label>
+            <textarea
+              class="form-control"
+              formControlName="info"
+              id="info"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

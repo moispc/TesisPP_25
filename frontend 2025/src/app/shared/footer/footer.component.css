@@ -1,0 +1,27 @@
+
+footer{
+  padding-top: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  background-color:#00acb561;
+}
+.nav-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.btn {
+  color: white;
+  width: 110px;
+}
+
+.text_copy{
+color:var(--color-primario) ;
+font-weight: 300;
+}
+
+#lista {
+font-size: 2rem;
+}

@@ -1,0 +1,201 @@
+.container {
+  max-width: 900px;
+  background: #f7f7fa;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  margin-top: 2.5rem;
+}
+img {
+  border-radius: 5px;
+}
+h2 {
+  color: #222;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+}
+form .row.g-2 > .col-md-4, form .row.g-2 > .col-md-2 {
+  margin-bottom: 1rem;
+}
+input.form-control, select.form-select, textarea.form-control {
+  border-radius: 7px;
+  border: 1px solid #cfd8dc;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  color: #222;
+}
+input.form-control:focus, select.form-select:focus, textarea.form-control:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px #1976d233;
+}
+button.btn-success {
+  background: #1976d2;
+  border: none;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 0.7rem 2.2rem;
+  border-radius: 7px;
+  transition: background 0.2s;
+}
+button.btn-success:active, button.btn-success:focus {
+  background: #125ea2;
+}
+.btn-outline-primary {
+  border-radius: 7px;
+  font-size: 0.95rem;
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  background: #fff;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-outline-primary:hover {
+  background: #1976d2;
+  color: #fff;
+}
+.table {
+  margin-top: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+.table th,
+.table td {
+  vertical-align: middle;
+  text-align: center;
+}
+.table td img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.table th {
+  background: #1976d2;
+  color: #fff;
+  font-weight: 500;
+}
+.table td {
+  vertical-align: middle;
+}
+.table img {
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+img.rounded.shadow.border {
+  border: 1.5px solid #cfd8dc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  background: #fff;
+}
+.text-danger {
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+}
+.alert-info {
+  margin-top: 2rem;
+  border-radius: 8px;
+  background: #e3f2fd;
+  color: #0d6efd;
+  font-weight: 500;
+}
+.spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* Labels flotantes para inputs de precio y stock */
+.floating-label-input {
+  padding-top: 1.2rem;
+}
+.floating-label {
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+  color: #888;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.2s;
+  background: #fff;
+  padding: 0 0.2rem;
+}
+.floating-label-input:focus + .floating-label,
+.floating-label-input:not(:placeholder-shown) + .floating-label {
+  top: -0.7rem;
+  left: 0.8rem;
+  font-size: 0.85rem;
+  color: #1976d2;
+  background: #fff;
+}
+
+/* Estilos para botón de eliminar y modal importante */
+.btn-eliminar-prod {
+  left: -1.2rem;
+  z-index: 2;
+  font-size: 1.3rem;
+  color: #d32f2f !important;
+  background: none;
+  border: none;
+  transition: color 0.2s, transform 0.2s;
+}
+.btn-eliminar-prod:hover {
+  color: #b71c1c !important;
+  transform: scale(1.15);
+}
+.important-modal .modal-content {
+  border: 2.5px solid #d32f2f;
+  border-radius: 12px;
+  box-shadow: 0 6px 32px rgba(211,47,47,0.15), 0 1.5px 4px rgba(0,0,0,0.04);
+}
+.important-modal .modal-header {
+  background: linear-gradient(90deg, #d32f2f 70%, #fff3cd 100%);
+  border-bottom: 1.5px solid #d32f2f;
+}
+.important-modal .modal-title {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.important-modal .modal-footer .btn-danger {
+  background: #d32f2f;
+  border: none;
+}
+.important-modal .modal-footer .btn-danger:hover {
+  background: #b71c1c;
+}
+.important-modal .modal-footer .btn-outline-secondary {
+  border-radius: 7px;
+}
+
+/* Estilos modernos y centralizados para botones de acciones */
+.btn-icon {
+  background: #f5f6fa;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 1.5px 6px rgba(0,0,0,0.07);
+  font-size: 1.5rem;
+  margin: 0 0.1rem;
+}
+.btn-icon:active, .btn-icon:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #1976d233;
+  transform: scale(1.08);
+}
+.btn-trash {
+  color: #e53935 !important;
+}
+.btn-trash:hover {
+  background: #ffeaea;
+  color: #b71c1c !important;
+}
+.btn-edit {
+  color: #1976d2 !important;
+}
+.btn-edit:hover {
+  background: #e3f0ff;
+  color: #0d47a1 !important;
+}

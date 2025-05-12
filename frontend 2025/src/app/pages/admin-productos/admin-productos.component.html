@@ -1,0 +1,175 @@
+<div class="container mt-4">
+  <h2>Administración de Productos</h2>
+  <form [formGroup]="productoForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="row g-2">
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="nombre_producto" placeholder="Nombre del producto">
+        <div class="text-danger" *ngIf="productoForm.get('nombre_producto')?.invalid && productoForm.get('nombre_producto')?.touched">Nombre requerido</div>
+      </div>
+      <div class="col-md-2 position-relative">
+        <input id="precio" type="number" class="form-control floating-label-input" formControlName="precio" placeholder=" " autocomplete="off">
+        <label for="precio" class="floating-label">Precio</label>
+        <div class="text-danger" *ngIf="productoForm.get('precio')?.invalid && productoForm.get('precio')?.touched">Precio válido requerido</div>
+      </div>
+      <div class="col-md-2 position-relative">
+        <input id="stock" type="number" class="form-control floating-label-input" formControlName="stock" placeholder=" " autocomplete="off">
+        <label for="stock" class="floating-label">Stock</label>
+        <div class="text-danger" *ngIf="productoForm.get('stock')?.invalid && productoForm.get('stock')?.touched">Stock requerido</div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-select" formControlName="id_categoria">
+          <option value="" disabled selected hidden>Productos</option>
+          <option value="1">Empanadas</option>
+          <option value="2">Lomos</option>
+          <option value="3">Hamburguesas</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <div class="d-flex flex-column align-items-center">
+          <label for="file-input-prod" class="btn btn-outline-primary btn-sm mb-1 w-100">Subir imagen</label>
+          <input id="file-input-prod" type="file" accept="image/*" (change)="onImagenSeleccionada($event)" style="display: none;">
+          <img *ngIf="productoForm.value.imageURL" [src]="productoForm.value.imageURL" alt="img" width="60" class="mb-1 mt-1 rounded shadow border">
+          <div *ngIf="cargandoImagen" class="spinner-border spinner-border-sm text-primary mt-1"></div>
+          <div class="text-danger" *ngIf="imagenError">{{ imagenError }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <textarea class="form-control" formControlName="descripcion" placeholder="Descripción"></textarea>
+        <div class="text-danger" *ngIf="productoForm.get('descripcion')?.invalid && productoForm.get('descripcion')?.touched">Descripción requerida</div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <button class="btn btn-success" type="submit" [disabled]="productoForm.invalid">Agregar producto</button>
+      </div>
+    </div>
+  </form>
+
+  <h4>Productos existentes</h4>
+  <div *ngIf="isLoading" class="text-center my-3">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p>Cargando productos...</p>
+  </div>
+  <table class="table table-bordered table-hover" *ngIf="!isLoading && productos.length">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Stock (unidades)</th>
+        <th>Categoría</th>
+        <th>Imagen</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of productos">
+        <td>{{p.id_producto}}</td>
+        <td>{{p.nombre_producto}}</td>
+        <td>{{p.precio | currency:'ARS':'symbol':'1.0-0'}}</td>
+        <td>{{p.stock}} <span *ngIf="p.stock !== undefined">unidades</span></td>
+        <td>{{p.id_categoria}}</td>
+        <td><img [src]="p.imageURL" alt="img" width="50"></td>
+        <td class="text-center align-middle">
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <button class="btn btn-icon btn-trash" title="Eliminar" (click)="abrirModalEliminar(p)">
+              <i class="bi bi-trash3" style="font-size: 1.5rem;"></i>
+            </button>
+            <button class="btn btn-icon btn-edit" title="Editar" (click)="abrirModalEditar(p)">
+              <i class="bi bi-wrench-adjustable-circle" style="font-size: 1.5rem;"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isLoading && !productos.length" class="alert alert-info">No hay productos cargados.</div>
+
+  <!-- Modal de confirmación de eliminación -->
+  <div class="modal fade show important-modal" tabindex="-1" [ngStyle]="{display: mostrarModalEliminar ? 'block' : 'none', background: 'rgba(0,0,0,0.45)'}" *ngIf="mostrarModalEliminar">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-danger shadow-lg">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>Acción importante</h5>
+          <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="cerrarModalEliminar()"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="fs-5 fw-bold text-danger mb-3">¿Estás seguro que deseas eliminar el producto <span class="text-dark">"{{ productoAEliminar?.nombre_producto }}"</span>?</p>
+          <p class="text-secondary mb-0">Esta acción no se puede deshacer.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-outline-secondary px-4" (click)="cerrarModalEliminar()">Cancelar</button>
+          <button type="button" class="btn btn-danger px-4 fw-bold" (click)="confirmarEliminarProducto()">Eliminar definitivamente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin modal -->
+
+  <!-- Modal de edición de producto -->
+  <div class="modal fade show important-modal" tabindex="-1" [ngStyle]="{display: mostrarModalEditar ? 'block' : 'none', background: 'rgba(0,0,0,0.45)'}" *ngIf="mostrarModalEditar">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-primary shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title"><i class="bi bi-wrench-adjustable me-2"></i>Editar producto</h5>
+          <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="cerrarModalEditar()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-3 d-flex flex-column align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center gap-2">
+              <img [src]="productoAEditar?.imageURL" alt="img" width="170" class="rounded shadow border mb-2">
+              <label for="file-input-edit" class="btn btn-outline-primary btn-xs mb-2 w-auto px-2 py-1 ms-2" style="font-size:0.85rem; height:2rem;">Modificar imagen</label>
+              <input id="file-input-edit" type="file" accept="image/*" (change)="onImagenSeleccionadaEdicion($event)" style="display: none;">
+            </div>
+            <div *ngIf="cargandoImagenEdicion" class="spinner-border spinner-border-sm text-primary mt-1"></div>
+            <div class="text-danger" *ngIf="imagenErrorEdicion">{{ imagenErrorEdicion }}</div>
+          </div>
+          <form [formGroup]="editarForm">
+            <div class="mb-2">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre_producto">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Precio</label>
+              <input type="number" class="form-control" formControlName="precio">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Stock</label>
+              <input type="number" class="form-control" formControlName="stock">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Categoría</label>
+              <select class="form-select" formControlName="id_categoria">
+                <option value="" disabled selected hidden>Selecciona categoría</option>
+                <option [value]="1">Empanadas</option>
+                <option [value]="2">Lomos</option>
+                <option [value]="3">Hamburguesas</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" formControlName="descripcion"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-outline-secondary px-4" (click)="cerrarModalEditar()">Cancelar</button>
+          <button type="button" class="btn btn-primary px-4 fw-bold" (click)="guardarEdicion()" [disabled]="editarForm.invalid">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin modal edición -->
+</div>
+
+<style>
+select.form-select {
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.2em;
+}
+</style>

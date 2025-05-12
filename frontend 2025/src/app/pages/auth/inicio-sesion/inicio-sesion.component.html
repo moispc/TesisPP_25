@@ -1,0 +1,59 @@
+<div class="text-center">
+  <main class="form-signin">
+    <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
+      <h1 class="h4 mb-3 fw-normal text-dark">
+        Inicia sesión para realizar tu pedido
+      </h1>
+
+      <div class="form-floating">
+        <input type="text" formControlName="email" class="form-control">
+        <label for="floatingInput">Email</label>
+
+        @if (Email?.errors && Email?.touched) {
+        @if (Email?.hasError('required'))
+        {
+        <p class="text-danger">
+          El email es requerido.
+        </p>
+        }
+        @else if (Email?.hasError('email'))
+        {
+        <p class="text-danger">
+          El formato del email debe ser válido.
+        </p>
+        }
+        }
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+        />
+        <label for="floatingPassword">Password</label>
+
+        @if(Password?.errors && Password?.touched) {
+        @if(Password?.hasError('required')) {
+        <p class="text-danger">El Password es requerido.</p>
+        } @else if (Password?.hasError('minlength') ) {
+        <p class="text-danger">
+          El Password requiere como mínimo 8 caracteres.
+        </p>
+        } }
+      </div>
+  <div class="text-danger p-3">{{errorMensaje}}</div>
+      <button
+        class="btn btn-info"
+        type="submit"
+        style="--bs-btn-padding-y: 0.6rem; --bs-btn-padding-x: 8.3em"
+      >
+        Iniciar Sesion
+      </button>
+
+      <!-- <p class="mt-5 mb-3 text-muted">&copy; 2024</p> -->
+    </form>
+    <br>
+    <p>Si no tienes cuenta puedes <a class="link-opacity-100" routerLink="/registro">crear nueva cuenta</a> </p>
+  </main>
+</div>

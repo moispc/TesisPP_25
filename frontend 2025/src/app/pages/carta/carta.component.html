@@ -1,0 +1,213 @@
+<!-- <div class="bloqueo" *ngIf="brilloBajado"></div> -->
+<h1 class="title">Conoce nuestra variedad de comidas.</h1>
+
+@if(estaLogueado() && mostrarCarrito) {
+<button
+  class="btn-carrito"
+  aria-label="mostrar carrito de compras"
+  (click)="toggleCarrito()"
+>
+  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+</button>
+}
+<div class="mb-4 text-center">
+  <button class="btn btn-outline-primary mx-1" [class.active]="filtroCategoria==='todas'" (click)="filtroCategoria='todas'">Todas</button>
+  <button class="btn btn-outline-primary mx-1" [class.active]="filtroCategoria==='hamburguesas'" (click)="filtroCategoria='hamburguesas'">Hamburguesas</button>
+  <button class="btn btn-outline-primary mx-1" [class.active]="filtroCategoria==='lomos'" (click)="filtroCategoria='lomos'">Lomos</button>
+  <button class="btn btn-outline-primary mx-1" [class.active]="filtroCategoria==='empanadas'" (click)="filtroCategoria='empanadas'">Empanadas</button>
+</div>
+<section>
+  <div class="container py-5">
+    <div
+      class="row justify-content-center mb-3"
+      id="wrapper_box"
+      *ngFor="let product of productosFiltrados | paginate : { itemsPerPage: 4, currentPage: p }"
+    >
+      <div class="col-md-12 col-xl-10">
+        <div class="card shadow-0 border rounded-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                <div class="image-container">
+                  <img
+                    src="{{ product.imageURL }}"
+                    data-bs-target="#modalImagen"
+                    data-bs-toggle="modal"
+                    (click)="cargarModal(product)"
+                  />
+
+                  <div class="mask"></div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-xl-6">
+                <h5 id="nombreProducto">{{ product.nombre_producto }}</h5>
+                <div class="d-flex flex-row">
+                  <div class="text-danger mb-1 me-2">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </div>
+                  <span>310</span>
+                </div>
+                <!-- <div class="mt-1 mb-0 text-muted small">
+                  <span>100% cotton</span>
+                  <span class="text-primary"> • </span>
+                  <span>Light weight</span>
+                  <span class="text-primary"> • </span>
+                  <span>Best finish<br /></span>
+                </div>
+                <div class="mb-2 text-muted small">
+                  <span>Unique design</span>
+                  <span class="text-primary"> • </span>
+                  <span>For men</span>
+                  <span class="text-primary"> • </span>
+                  <span>Casual<br /></span>
+                </div> -->
+                <p class="text-truncate mb-4 mb-md-0">
+                  {{ product.descripcion }}
+                </p>
+              </div>
+
+              <div
+                class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start"
+              >
+                <br />
+                <div class="d-flex flex-row align-items-center mb-1">
+                  <h4 class="mb-1 me-1" id="precioNuevo">
+                    {{ "$ " + product.precio }}
+                  </h4>
+                  <span id="precioViejo" class="text-danger"
+                    ><s>{{ "$ " + (product.precio * 1.3).toFixed(0) }}</s></span
+                  >
+                </div>
+                @if(product.stock>0){
+                <h6 class="text-success">Disponible</h6>
+                <div class="d-flex flex-column mt-4">
+                  <button
+                    class="btn btn-outline-primary btn-sm mt-2"
+                    (click)="cargarModal(product)"
+                    type="button"
+                  >
+                    Añadir al carrito
+                  </button>
+                </div>
+                } @else {
+                <h6 class="text-danger">Sin Stock</h6>
+                <div class="d-flex flex-column mt-4">
+                  <button
+                    class="btn btn-outline-primary btn-sm mt-2"
+                    (click)="cargarModal(product)"
+                    type="button"
+                    disabled
+                  >
+                    Añadir al carrito
+                  </button>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls
+      
+      (pageChange)="p = $event"
+      [autoHide]="true"
+      [responsive]="true"
+      class="paginationControls text-center"
+    ></pagination-controls>
+  </div>
+</section>
+
+<div
+  class="modal fade"
+  id="modalCompra"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img
+          class="modal-img img-fluid"
+          id="imagenModalCompra"
+          src="{{ producto.imageURL }}"
+          alt=""
+        />
+        <h2 class="modal-title">{{ producto.nombre_producto }}</h2>
+        <hr />
+        <p class="modal-price">Precio por unidad: ${{ producto.precio }}</p>
+
+        <hr />
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1"
+            >Cantidad deseada:
+          </span>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="cantidadIngresada"
+            (input)="calcularSubtotal()"
+            value="1"
+            min="1"
+            id="cantidad"
+            placeholder="Cantidad"
+            aria-label="Cantidad"
+            aria-describedby="Cantidad deseada"
+          />
+        </div>
+
+        <hr />
+        <h3 class="modal-total" id="subtotal">Subtotal: $ {{ subtotal }}</h3>
+        <hr />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary confirm-button"
+          (click)="addProducto()"
+        >
+          Añadir al carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalImagen"
+  tabindex="-1"
+  aria-labelledby="modalImagen"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <img
+          class="img-fluid"
+          id="imagenModalZoom"
+          src="{{ producto.imageURL }}"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>

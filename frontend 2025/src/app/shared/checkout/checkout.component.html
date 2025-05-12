@@ -1,0 +1,90 @@
+<div class="container my-5 card-container">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">Paga nuestro producto</h1>
+      <h1 class="h5" >Total a facturar: $ {{pedido.total}}</h1>
+      <form (ngSubmit)="onSubmit()" #paymentForm="ngForm">
+        <div class="mb-3">
+          <div class="form-check d-flex justify-content-between align-items-center">
+            <div>
+              <input class="form-check-input" type="radio" name="payment" id="pp" [(ngModel)]="paymentMethod" value="paypal" required>
+              <label class="form-check-label" for="pp">Paypal</label>
+            </div>
+            <img src="https://cdn.icon-icons.com/icons2/2108/PNG/512/paypal_icon_130860.png" alt="paypal">
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="form-check d-flex justify-content-between align-items-center">
+            <div>
+              <input class="form-check-input" type="radio" name="payment" id="cd" [(ngModel)]="paymentMethod" value="card" required>
+              <label class="form-check-label" for="cd">Debito/ Tarjeta de Credito</label>
+            </div>
+            <div>
+              <img src="https://cdn.icon-icons.com/icons2/1186/PNG/512/1490135017-visa_82256.png" alt="visa">
+              <img src="https://icons.iconarchive.com/icons/designbolts/credit-card-payment/256/Master-Card-Blue-icon.png" alt="mastercard">
+              <img src="https://cdn-icons-png.flaticon.com/512/179/179431.png" alt="amex">
+              <img src="https://icons.iconarchive.com/icons/designbolts/credit-card-payment/256/Maestro-icon.png" alt="maestro">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card Payment Fields -->
+        <div class="mb-3" *ngIf="paymentMethod === 'card'">
+          <label for="cardholdername" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="cardholdername" placeholder="e.j. Gallardo Agustin" [(ngModel)]="cardholderName" name="cardholderName" required>
+        </div>
+        <div class="mb-3" *ngIf="paymentMethod === 'card'">
+          <label for="cardnumber" class="form-label">Tarjeta</label>
+          <input type="text" class="form-control" id="cardnumber" placeholder="8888-8888-8888-8888" pattern="[0-9]{16,19}" maxlength="19" [(ngModel)]="cardNumber" name="cardNumber" required>
+        </div>
+        <div class="mb-3 row" *ngIf="paymentMethod === 'card'">
+          <div class="col">
+            <label for="expiry-month" class="form-label">Expira</label>
+            <div class="d-flex">
+              <select class="form-select" id="expiry-month" [(ngModel)]="expiryMonth" name="expiryMonth" required>
+                <option value="">MM</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+                <option value="7">07</option>
+                <option value="8">08</option>
+                <option value="9">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+              <span class="mx-2">/</span>
+              <select class="form-select" id="expiry-year" [(ngModel)]="expiryYear" name="expiryYear" required>
+                <option value="">YYYY</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <label for="cvv" class="form-label">CVC/CVV</label>
+            <input type="text" class="form-control" id="cvv" maxlength="4" placeholder="123" [(ngModel)]="cvv" name="cvv" required>
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.valid || isProcessing">
+            <div *ngIf="isProcessing" class="spinner-border spinner-border-sm me-2" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <i class="bi bi-lock"></i> Confirmar y pagar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
+
+.header {
+    display: grid;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'Ubuntu Sans';
+}
+
+.dashboard-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.button-group button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.button-group button:nth-child(2) {
+    background: rgb(31, 31, 87);
+    color: white;
+}
+
+.tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+    color: #333;
+}
+
+.tab:hover {
+    border-color: rgb(31, 31, 87);
+}
+
+.tab.active {
+    border-color: rgb(31, 31, 87);
+    color: rgb(31, 31, 87);
+}
+
+.cards-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.applications-section {
+    background: white;
+    box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.applications-section h1 {
+    font-family: 'Ubuntu Sans';
+    font-size: 24px;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background-color: #f5f5f5;
+    font-family: 'Ubuntu Sans';
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: rgb(31, 31, 87);
+    color: white;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.action-cell {
+    display: flex;
+    align-items: center;
+}
+
+.action-cell button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.action-cell button:hover {
+    background-color: #45a049;
+}
+
+.delete-icon {
+    color: #f44336;
+    font-size: 20px;
+    cursor: pointer;
+}

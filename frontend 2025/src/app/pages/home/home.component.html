@@ -1,0 +1,85 @@
+<div class="hambur-portada">
+    <img src="./assets/home/hambur.jpg" alt="hamburguesa-portada">
+</div>
+
+    <section class="container" id="texto">
+        <article>
+            <h2 id="headings">Nosotros</h2>
+            <p>En el corazón de Córdoba Capital, encontramos nuestra pasión por las hamburguesas. Somos ISPC Food, un
+                equipo dedicado a crear experiencias gastronómicas inolvidables para todos los amantes de las
+                hamburguesas.
+                Pero no somos solo hamburguesas. Somos una comunidad de amantes de la buena comida que se reúnen para
+                disfrutar de momentos únicos. Nuestro ambiente acogedor y amigable te invita a relajarte y compartir
+                deliciosas hamburguesas con amigos y familiares.
+                Nos enorgullece ser parte de la vibrante escena gastronómica de Córdoba Capital y agradecemos a nuestros
+                clientes por su apoyo continuo. Estamos comprometidos a seguir sirviendo las mejores hamburguesas de la
+                ciudad y a hacer de cada visita una experiencia memorable.
+                Bienvenidos a ISPC Food, donde cada hamburguesa cuenta una historia y cada cliente se convierte en un
+                amigo. ¡Ven y únete a nosotros en esta deliciosa aventura!
+            </p>
+        </article>
+    </section>
+    <hr><hr>
+    <aside class="container" id="texto2">
+        <h2 id="headings2">Cómo comenzó todo</h2>
+        <p>Nuestra historia comienza con la búsqueda incansable de la hamburguesa perfecta: jugosa, llena de sabor y
+            preparada con ingredientes frescos y locales. Desde ese momento, nos comprometimos a ofrecer a nuestros
+            clientes la mejor hamburguesa en cada bocado.
+
+            En ISPC Food, creemos que las hamburguesas son una obra de arte. Por eso, hemos perfeccionado cada receta,
+            seleccionando cuidadosamente los ingredientes y cocinando nuestras hamburguesas con amor y dedicación.</p>
+    </aside>
+    <hr><hr>
+    <div class="container mt-5">
+        <div id="comentariosCarousel" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-inner" id="comentariosContainer">
+
+              <div *ngFor="let comentario of comentarios, let i=index" [className]="'carousel-item'+(i===0 ? ' active' : '')">
+                
+                <div class="col-6 mx-auto comentario"> {{comentario.comentario}}</div>
+                      
+                      
+                
+                
+                </div>
+      
+
+                            
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#comentariosCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#comentariosCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+        </div>
+    </div>
+    
+
+    <!-- // const cargarComentarios = async (comentarios: any) => {
+        //   const comentariosContainer: any = document.getElementById(
+        //     'comentariosContainer'
+        //   );
+        
+        //   comentarios.forEach((comentario: any, index: number) => {
+        //     const comentarioDiv = document.createElement('div');
+        //     comentarioDiv.className = 'carousel-item' + (index === 0 ? ' active' : '');
+        
+        //     const rowDiv = document.createElement('div');
+        //     rowDiv.className = 'row';
+        
+        //     const colDiv = document.createElement('div');
+        //     colDiv.className = 'col-6 mx-auto';
+        
+        //     const comentarioElement = document.createElement('div');
+        //     comentarioElement.className = 'comentario';
+        //     comentarioElement.textContent = comentario.comentario;
+        
+        //     colDiv.appendChild(comentarioElement);
+        //     rowDiv.appendChild(colDiv);
+        //     comentarioDiv.appendChild(rowDiv);
+        //     comentariosContainer.appendChild(comentarioDiv);
+        //   });
+        // }; -->
