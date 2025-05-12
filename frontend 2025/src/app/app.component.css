@@ -17,6 +17,34 @@
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   cursor: pointer;
 }
+
+/* Estilos para el botón flotante de WhatsApp */
+.btn-whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-whatsapp-float:hover {
+  background-color: #20ba5a;
+  color: #fff;
+  transform: scale(1.1);
+}
+
 .btn-switch-vista .icono {
   font-size: 1.3rem;
   display: flex;

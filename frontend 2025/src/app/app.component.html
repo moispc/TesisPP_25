@@ -5,6 +5,12 @@
   </span>
   <span class="texto">{{ vistaUsuario ? 'Vista usuario' : 'Vista admin' }}</span>
 </button>
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/5493517460026" target="_blank" rel="noreferrer" class="btn-whatsapp-float">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
 <app-nav [vistaUsuario]="vistaUsuario"></app-nav>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
