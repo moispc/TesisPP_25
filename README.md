@@ -4,9 +4,6 @@
 
 
 ### Moispc - 2025 - Plataforma Web y Mobile para Ventas de Comidas Rápidas.
-Tienda Deployada-> https://ispcfood.netlify.app
-
-Backend deployado-> Python + Django: https://backmobile1.onrender.com/
 ### Descripción
 
 **Food_ISPC** es una solución digital desarrollada como parte de un proyecto integrador para un emprendimiento de comidas rápidas. La plataforma incluye una versión web y una app móvil, pensadas para que los usuarios puedan explorar el menú, hacer pedidos y gestionar sus compras de forma simple y rápida.
