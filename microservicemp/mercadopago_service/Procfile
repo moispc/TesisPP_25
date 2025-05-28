@@ -1,0 +1,1 @@
+web: gunicorn mp_integration.wsgi
