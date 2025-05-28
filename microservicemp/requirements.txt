@@ -1,0 +1,9 @@
+django>=5.2.0,<6.0.0
+djangorestframework>=3.16.0,<4.0.0
+python-dotenv>=1.0.0,<2.0.0
+requests>=2.30.0,<3.0.0
+mercadopago>=2.0.0,<3.0.0
+gunicorn>=21.0.0,<22.0.0  # Para producción
+PyMySQL >=1.0.0,<2.0.0  # Para producción
+django-cors-headers==4.3.1
+mysqlclient==2.2.4
