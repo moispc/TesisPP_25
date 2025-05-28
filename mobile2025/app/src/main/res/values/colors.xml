@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_dark">#181A20</color>
+    <color name="bottom_nav_dark">#23242B</color>
+    <color name="bottom_nav_dark_selected">#FF9800</color>
+    <color name="bottom_nav_dark_unselected">#B0B0B0</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="orange">#FFFF9800</color>
+    <color name="yellow">#FFFFEB3B</color>
+</resources>
+

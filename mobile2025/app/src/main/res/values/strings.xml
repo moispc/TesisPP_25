@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">food_front</string>
+    <string name="tarjetas_de_credito1">Tarjetas de Crédito</string>
+    <string name="mercado_pago1">Mercado Pago</string>
+    <string name="paypal1">Paypal</string>
+    <string name="seleccione_el_metodo_de_pago1">Seleccione el método de pago</string>
+    <string name="siguiente1">Siguiente</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="inicia_sesion">Iniciar sesión</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="forgot_password">Olvide mi contraseña</string>
+    <string name="login">Ingresar</string>
+    <string name="register">¿No tienes cuenta? Crea una</string>
+    <string name="registro">Registro</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="verifique_contrase_a">Verifique Contraseña</string>
+    <string-array name="number_picker_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string name="combo_3_docenas_de_empanadas">Combo 3 Docenas</string>
+    <string name="carrito">Carrito</string>
+    <string name="datos_entrega">Datos Entrega</string>
+</resources>
+
