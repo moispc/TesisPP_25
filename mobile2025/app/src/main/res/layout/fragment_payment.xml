@@ -1,0 +1,112 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    tools:context=".MainActivity"
+    tools:ignore="UnknownId">
+
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seleccione_el_metodo_de_pago1"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"/>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="#222222"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#C77600"
+                android:textColor="#FFFFFF"
+                android:text="@string/tarjetas_de_credito1" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="66dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="#333333"
+                android:padding="8dp"
+                app:srcCompat="@drawable/cards" />
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="#C77600"
+                android:textColor="#FFFFFF"
+                android:text="@string/mercado_pago1" />
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="66dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="#333333"
+                android:padding="8dp"
+                app:srcCompat="@drawable/mp" />
+
+            <RadioButton
+                android:id="@+id/radioButton6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="#C77600"
+                android:textColor="#FFFFFF"
+                android:text="@string/paypal1" />
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="66dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="#333333"
+                android:padding="8dp"
+                app:srcCompat="@drawable/pp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#C77600"
+        android:text="@string/siguiente1"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_dark">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#fe9a43"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="100dp"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:id="@+id/cartTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/datos_entrega"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_dark"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dirección de entrega"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Siempre viva 123"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/textViewNombre"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Aquí puedes agregar más campos de datos de entrega si es necesario -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/item1"
+        android:layout_marginTop="1dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_dark"
+        app:layout_constraintTop_toBottomOf="@+id/item1"
+        android:padding="16dp"
+        android:layout_marginTop="2dp"
+        >
+
+        <TextView
+            android:id="@+id/tvTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Método de entrega"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            />
+
+        <TextView
+            android:id="@+id/tvSubTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30 - 35 min"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle2"
+            android:layout_marginTop="26dp"
+            />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/bg_dark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTitle2"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@drawable/big_border"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageView
+                    android:id="@+id/tvAdd2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/bike"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/item2"
+        android:layout_marginTop="1dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_dark"
+        app:layout_constraintTop_toBottomOf="@+id/item2"
+        android:padding="16dp"
+        android:layout_marginTop="2dp"
+        >
+
+        <TextView
+            android:id="@+id/tvTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Costos de envio"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            />
+
+        <TextView
+            android:id="@+id/tvSubTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$280"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle3"
+            android:layout_marginTop="26dp"
+            />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/bg_dark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTitle3"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@drawable/big_border"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageView
+                    android:id="@+id/tvAdd4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/money"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/item3"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_dark"
+        app:layout_constraintTop_toBottomOf="@+id/item3"
+        android:padding="16dp"
+        android:layout_marginTop="2dp"
+        >
+
+        <TextView
+            android:id="@+id/tvTitle4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Método de pago"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            />
+
+        <TextView
+            android:id="@+id/tvSubTitle4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Efectivo"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle4"
+            android:layout_marginTop="26dp"
+            />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/bg_dark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTitle4"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@drawable/big_border"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageView
+                    android:id="@+id/tvAdd3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_payment_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/item4"/>
+
+
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/btnHacerPedido"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Hacer el pedido"
+        android:textAllCaps="false"
+        android:padding="12dp"
+        android:backgroundTint="#00c14d"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item4"
+        android:layout_marginTop="25dp"
+        android:textColor="#fefdf9"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

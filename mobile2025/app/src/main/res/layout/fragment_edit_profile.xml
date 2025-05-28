@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange"
+    android:orientation="vertical"
+    android:padding="16dp"> <!-- Fondo naranja -->
+
+    <!-- Contenedor para la flecha y el título -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Flecha para regresar -->
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Back"
+            android:padding="8dp" />
+
+        <!-- Texto de Editar perfil -->
+        <TextView
+            android:id="@+id/title_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar perfil"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:paddingStart="8dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:hint="Nombre"
+        android:text="Pablo" />
+
+    <EditText
+        android:id="@+id/edit_lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Apellido"
+        android:text="Fernandez" />
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:text="pablo_fernandez@gmail.com" />
+
+    <EditText
+        android:id="@+id/edit_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Teléfono"
+        android:inputType="phone"
+        android:text="3515987987" />
+
+    <Button
+        android:id="@+id/btn_save_changes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#FFD700"
+        android:text="Guardar cambios"
+        android:textColor="@android:color/black" />
+
+</LinearLayout>

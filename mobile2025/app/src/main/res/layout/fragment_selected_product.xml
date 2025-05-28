@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgSelectedProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_selected_product_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/textContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgSelectedProduct">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Combo 2 docenas de empanadas"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dos docenas con relleno a elección"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona tus rellenos:"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/hr1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/textContainer" />
+
+    <!-- PRIMER ITEM -->
+    <LinearLayout
+        android:id="@+id/linearLayoutItem1"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/hr1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical">
+
+            <TextView
+                android:id="@+id/itemTitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Carne asada"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/number_picker_values" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/hr2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutItem1" />
+
+    <!-- SEGUNDO ITEM -->
+    <LinearLayout
+        android:id="@+id/linearLayoutItem2"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/hr2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical">
+
+            <TextView
+                android:id="@+id/itemTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Pollo"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/number_picker_values" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/hr3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutItem2" />
+
+    <!-- TERCER ITEM -->
+    <LinearLayout
+        android:id="@+id/linearLayoutItem3"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/hr3">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical">
+
+            <TextView
+                android:id="@+id/itemTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Queso"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/number_picker_values" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/hr4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutItem3" />
+
+
+    <!-- BOTÓN -->
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Agregar $33500"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="#C77600"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutItem3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
