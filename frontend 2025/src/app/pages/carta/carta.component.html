@@ -31,6 +31,7 @@
                 <div class="image-container">
                   <img
                     src="{{ product.imageURL }}"
+                    [ngClass]="{'empanada-pollo': product.nombre_producto === 'Empanadas de Pollo'}"
                     data-bs-target="#modalImagen"
                     data-bs-toggle="modal"
                     (click)="cargarModal(product)"

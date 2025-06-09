@@ -35,7 +35,6 @@ export class InicioSesionComponent {
   }
 
 
-
   onEnviar(event: Event) {
     event.preventDefault();
 
@@ -43,9 +42,15 @@ export class InicioSesionComponent {
       // Llamar al servicio de autenticación
       this.authService.login(this.Email?.value, this.Password?.value).subscribe({
         next:(success)=> {
-          // Guardar la URL de la imagen de perfil si viene en la respuesta (campo correcto)
+          // Guardar datos adicionales si vienen en la respuesta
           if (success.imagen_perfil_url) {
             localStorage.setItem('imagenPerfil', success.imagen_perfil_url);
+          }
+          if (success.direccion) {
+            localStorage.setItem('direccion', success.direccion);
+          }
+          if (success.telefono) {
+            localStorage.setItem('telefono', success.telefono);
           }
           // Redirigir al dashboard después de una autenticación exitosa
           this.router.navigate(['/home']);

@@ -1,0 +1,31 @@
+# Configuración para Netlify
+[build]
+  # Directorio que se publicará en el sitio web de Netlify
+  publish = "dist/app/browser/browser/browser"
+  # Comando para construir el sitio
+  command = "ng build --configuration production"
+
+# Configuración para SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Configuraciones específicas para rutas de proxy a la API de backend
+[[redirects]]
+  from = "/payment/success/*"
+  to = "https://backmp.onrender.com/payment/success/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/payment/webhook/*"
+  to = "https://backmp.onrender.com/payment/webhook/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/payment/health/*"
+  to = "https://backmp.onrender.com/payment/health/:splat"
+  status = 200
+  force = true

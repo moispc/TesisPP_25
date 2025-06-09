@@ -1,22 +1,33 @@
 <div class="container my-5 card-container">
   <div class="card">
     <div class="card-body">
-      <h1 class="card-title">Paga nuestro producto</h1>
-      <h1 class="h5" >Total a facturar: $ {{pedido.total}}</h1>
-      <form (ngSubmit)="onSubmit()" #paymentForm="ngForm">
-        <div class="mb-3">
-          <div class="form-check d-flex justify-content-between align-items-center">
+      <h1 class="card-title d-flex align-items-center gap-2">
+        Paga aquí nuestros productos
+      </h1>
+      <h1 class="h5">Total a facturar: $ {{pedido.total}}</h1>
+      <form (ngSubmit)="onSubmit()" #paymentForm="ngForm">        <!-- Opción de PayPal -->
+        <div class="mb-3">          <div class="form-check d-flex justify-content-between align-items-center">
             <div>
-              <input class="form-check-input" type="radio" name="payment" id="pp" [(ngModel)]="paymentMethod" value="paypal" required>
+              <input class="form-check-input" type="radio" name="payment" id="pp" [(ngModel)]="paymentMethod" value="paypal" (change)="onPaymentMethodChange()" required>
               <label class="form-check-label" for="pp">Paypal</label>
             </div>
             <img src="https://cdn.icon-icons.com/icons2/2108/PNG/512/paypal_icon_130860.png" alt="paypal">
           </div>
-        </div>
-        <div class="mb-3">
+        </div>        <!-- Opción de MercadoPago -->
+        <div class="mb-3">          
           <div class="form-check d-flex justify-content-between align-items-center">
             <div>
-              <input class="form-check-input" type="radio" name="payment" id="cd" [(ngModel)]="paymentMethod" value="card" required>
+              <input class="form-check-input" type="radio" name="payment" id="mp" [(ngModel)]="paymentMethod" value="mercadopago" (change)="onPaymentMethodChange()" required>
+              <label class="form-check-label" for="mp">MercadoPago</label>
+            </div>
+            <img [src]="mercadoPagoIcon" alt="mercadopago" style="max-height: 32px;">
+          </div>
+        </div>
+
+        <!-- Opción de Tarjeta -->
+        <div class="mb-3">          <div class="form-check d-flex justify-content-between align-items-center">
+            <div>
+              <input class="form-check-input" type="radio" name="payment" id="cd" [(ngModel)]="paymentMethod" value="card" (change)="onPaymentMethodChange()" required>
               <label class="form-check-label" for="cd">Debito/ Tarjeta de Credito</label>
             </div>
             <div>
@@ -73,15 +84,24 @@
             <label for="cvv" class="form-label">CVC/CVV</label>
             <input type="text" class="form-control" id="cvv" maxlength="4" placeholder="123" [(ngModel)]="cvv" name="cvv" required>
           </div>
-        </div>
-        
-        <!-- Submit Button -->
-        <div class="d-grid">
+        </div>        <!-- Submit Button para todos los métodos de pago EXCEPTO MercadoPago -->
+        <div class="d-grid" *ngIf="paymentMethod && paymentMethod !== 'mercadopago'">
           <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.valid || isProcessing">
             <div *ngIf="isProcessing" class="spinner-border spinner-border-sm me-2" role="status">
               <span class="visually-hidden">Cargando...</span>
             </div>
             <i class="bi bi-lock"></i> Confirmar y pagar
+          </button>
+        </div>        <!-- Botón específico de MercadoPago -->
+        <div class="d-grid" *ngIf="paymentMethod === 'mercadopago'">
+          <button type="button" class="btn btn-primary mercadopago-button" 
+                  [disabled]="isProcessing" 
+                  (click)="procesarPagoMercadoPago()">
+            <div *ngIf="isProcessing" class="spinner-border spinner-border-sm me-2" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <img [src]="mercadoPagoIcon" alt="MP" style="height: 24px; margin-right: 10px;vertical-align:middle;"> 
+            Pagar con Mercado Pago
           </button>
         </div>
       </form>

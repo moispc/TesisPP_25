@@ -37,6 +37,7 @@ class DetallePedido(models.Model):
     cantidad_productos = models.IntegerField(null=True)  
     precio_producto = models.FloatField()
     subtotal = models.FloatField(null=True)  
+    direccion_entrega = models.CharField(max_length=100, null=True)  # Nuevo campo
     class Meta:
         managed = True
         db_table = 'detalle_pedido'

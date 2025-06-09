@@ -92,13 +92,19 @@ export class CartaComponent implements OnInit {
   addProducto() {
     if (localStorage.getItem('userId') != null) {
       this.idUser = parseFloat(localStorage.getItem('userId')!);
+    }    // Usar la dirección del perfil si está disponible
+    let direccionEntrega = '';
+    const direccionPerfil = localStorage.getItem('direccion');
+    if (direccionPerfil && direccionPerfil.trim() !== '') {
+      direccionEntrega = direccionPerfil;
     }
+    
     const detallePedido = new DetallePedido(
       this.idUser,
       0,
       this.producto.id_producto,
       this.cantidadIngresada,
-      'Sin especificar'
+      direccionEntrega
     );
 
     this.pedidoService.agregarProducto(detallePedido).subscribe({

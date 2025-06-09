@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^17.3.11",
     "@angular/platform-browser-dynamic": "^17.3.11",
     "@angular/router": "^17.3.11",
+    "@mercadopago/sdk-js": "^0.0.3",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.6",
-    "@angular/cli": "^17.3.6",
+    "@angular/cli": "^17.3.17",
     "@angular/compiler-cli": "^17.3.11",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",

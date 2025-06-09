@@ -9,5 +9,6 @@ urlpatterns = [
     path('ver_dashboard/', VerDashboard.as_view()),
     path('modificar_cantidad/<int:carrito_id>/', ModificarCantidadProductoCarrito.as_view(), name='modificar_cantidad_producto_carrito'),
     path('detalle_pedido/<int:pedido_id>/', VerDetallePedido.as_view(), name='detalle_pedido'),
+    path('ver_dashboard/entregar/', EntregarPedido.as_view(), name='entregar_pedido'),
 ]
 

@@ -52,30 +52,24 @@ export class RegistroComponent implements OnInit {
     event.preventDefault;
     if (this.form.valid) {
       this.usuario = this.form.value;
-      
-
       this.userService.addUser(this.usuario).subscribe({
         next: (data) => {
-          this.toastr.success("Usuario registrado correctamente. Inicie sesión con sus nuevas credenciales.");
-  
+          if (data && data.re_registro && data.nombre) {
+            this.toastr.success('Gracias por volver a elegirnos, ' + data.nombre + '!');
+          } else {
+            this.toastr.success('Usuario registrado correctamente. Inicie sesión con sus nuevas credenciales.');
+          }
           this.router.navigate(['exitoNuevo']);
         },
         error: (err: HttpErrorResponse) => {
-          
           if (err.error && err.error.email) {
-            
             this.emailExistente = true;
-            
           }
-
           if (err.status === 0) this.router.navigate(['serverError']);
         },
       });
-
-      
     } else {
       this.form.markAllAsTouched();
-    
     }
   }
 

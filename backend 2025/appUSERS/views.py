@@ -8,6 +8,54 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class CreateUsuarioView(generics.CreateAPIView):
     serializer_class = UsuarioSerializer
+    
+    def create(self, request, *args, **kwargs):
+        # Obtener el correo electrónico del nuevo registro
+        email = request.data.get('email')
+        
+        if email:            # Buscar si existe un usuario inactivo con este mismo correo como último correo
+            from appUSERS.models import Usuario
+            try:
+                # Usar filter en vez de get para manejar el caso de múltiples usuarios con el mismo email
+                inactive_users = Usuario.objects.filter(last_email=email, is_active=False)
+                
+                if inactive_users.exists():
+                    # Tomar el primer usuario inactivo encontrado (o podríamos usar el más reciente)
+                    inactive_user = inactive_users.first()
+                    
+                    # Si lo encontramos, vamos a reactivar al usuario y actualizar sus datos
+                    inactive_user.is_active = True
+                    inactive_user.email = email  # Restauramos el email original
+                
+                # Actualizamos los datos con la nueva información
+                if 'nombre' in request.data:
+                    inactive_user.nombre = request.data['nombre']
+                if 'apellido' in request.data:
+                    inactive_user.apellido = request.data['apellido']
+                if 'telefono' in request.data:
+                    inactive_user.telefono = request.data['telefono']
+                if 'direccion' in request.data:
+                    inactive_user.direccion = request.data['direccion']
+                if 'imagen_perfil_url' in request.data:
+                    inactive_user.imagen_perfil_url = request.data['imagen_perfil_url']
+                
+                # Si hay contraseña, la actualizamos
+                if 'password' in request.data:
+                    inactive_user.set_password(request.data['password'])
+                
+                # Guardamos los cambios
+                inactive_user.save()
+                
+                # Serializamos el usuario reactivado para devolverlo
+                serializer = self.get_serializer(inactive_user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                
+            except Usuario.DoesNotExist:
+                # Si no existe un usuario inactivo con ese email, continuamos normal
+                pass
+        
+        # Proceso normal si no hay reactivación
+        return super().create(request, *args, **kwargs)
 
 
 class RetrieveUpdateUsuarioView(generics.RetrieveUpdateAPIView):
@@ -68,27 +116,33 @@ class DeleteProfileView(APIView):
 
     def delete(self, request):
         user = request.user
-        carrito = Carrito.objects.filter(usuario=user).first()
-
-        if carrito and carrito.productos.exists():
-            #return Response({"detalle": "No se puede eliminar el perfil porque el carrito contiene productos."}, status=status.HTTP_400_BAD_REQUEST)
-            user.delete()
         
-        if carrito:
-            carrito.delete()
-
+        # Guardamos el email original para referencia futura
+        original_email = user.email
         
-        pedidos = Pedido.objects.filter(id_usuario=user)
-        if pedidos.exists():
-       
-            user.delete()
-            return Response({"detalle": "Perfil eliminado satisfactoriamente."}, status=status.HTTP_200_OK)
+        # En lugar de eliminar físicamente, desactivamos la cuenta (borrado lógico)
+        user.is_active = False
+        
+        # Guardar el email original en un campo adicional para una posible reactivación
+        user.last_email = original_email
+        
+        # Cambiamos el email actual para permitir nuevos registros con ese mismo email
+        user.email = f"deleted_{user.id_usuario}@example.com"  # Evitar conflictos al registrarse de nuevo
+        
+        # Opcional: podemos limpiar algunos datos sensibles pero manteniendo el registro
+        # user.nombre = "Usuario"
+        # user.apellido = "Eliminado"
+        # user.telefono = ""
+        # user.direccion = ""
+        # user.imagen_perfil_url = ""
+        
+        # Guardamos los cambios
+        user.save()
 
-        user.delete()
-
-        return Response({"detalle": "Perfil y carrito eliminados satisfactoriamente."}, status=status.HTTP_200_OK)
-
-        return Response({"detalle": "Perfil y carrito eliminados satisfactoriamente."}, status=status.HTTP_200_OK)
+        return Response({
+            "detalle": "Cuenta desactivada correctamente. Puedes volver a registrarte en cualquier momento.",
+            "email_original": original_email
+        }, status=status.HTTP_200_OK)
 
 class UpdateProfileImageView(APIView):
     permission_classes = [permissions.IsAuthenticated]

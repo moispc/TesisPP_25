@@ -1,98 +1,96 @@
-<aside [class.collapsed]="!isVisible" class="cart-aside">
-  <div class="sidebar p-2 d-flex flex-column fixed-top">
+<aside [class.collapsed]="!isVisible" class="cart-aside bg-light shadow-lg rounded-start-4">
+  <div class="sidebar p-3 d-flex flex-column fixed-top">
     <button
       type="button"
-      class="btn-close colapse-sidebar ms-auto mb-5"
+      class="btn-close colapse-sidebar ms-auto mb-4"
       aria-label="Close"
       (click)="cerrarSidebar()"
     ></button>
-    <p class="fs-1 fw-bold title text-center">Mi Carrito</p>
+    <p class="fs-2 fw-bold title text-center text-primary mb-2">Mi Carrito</p>
     @if (detallePedido.length!=0) {
     <hr />
-    
-    
-    <p class="text-center lh-1 titleDireccion">Dirección de entrega:</p>
-    @if(direccion=='Sin especificar'){
+    <div class="mb-2">
+      <p class="text-center lh-1 titleDireccion fw-semibold mb-1">Dirección de entrega:</p>
+      <div class="direccion-box bg-white border rounded-3 p-2 mb-1 text-center">
+        <span class="textDireccion fw-semibold text-success">
+          {{ direccion && direccion !== '' ? direccion + (info ? ' - ' + info : '') : direccionPerfil }}
+          <i class="bi bi-check-circle-fill ms-2 text-success"></i>
+        </span>
+      </div>
+      <small class="d-block leyenda-direccion mt-1 text-center">
+        Se utilizará automáticamente la dirección guardada en tu perfil.
+      </small>
       <button
-      class="btn btn-secondary"
-      data-bs-toggle="modal"
-      data-bs-target="#modalCambioDireccion"
-    >
-      Añadir dirección
-    </button>
-    }
-    @else
-    {
-      
-    <p class="text-center lh-1 textDireccion" >{{direccion}} - {{info}} </p>
-    <button
-      class="btn btn-secondary"
-      data-bs-toggle="modal"
-      data-bs-target="#modalCambioDireccion"
-    >
-      Modificar
-    </button>
-  }
-}
+        class="btn btn-outline-secondary w-100 mt-2"
+        data-bs-toggle="modal"
+        data-bs-target="#modalCambioDireccion"
+      >
+        Actualizar dirección
+      </button>
+      @if(isDireccionPerfil && direccion && direccion !== ''){
+        <small class="d-block text-success mb-2 text-center">
+          <i class="bi bi-check-circle-fill me-1"></i>Usando dirección de tu perfil
+        </small>
+      }
+    </div>
     <hr />
-    @if (detallePedido.length==0) {
-    <p class="h3 text-center title">El carrito está vacio.</p>
     }
-    <div class="sidebar-items">
-      <ul class="shop-list" style="list-style-type: none">
+    @if (detallePedido.length==0) {
+      <p class="h4 text-center title text-muted">El carrito está vacío.</p>
+    }
+    <div class="sidebar-items" style="max-height: 400px; overflow-y: auto;">
+      <ul class="shop-list p-0" style="list-style-type: none">
         <li
-          class="product-card bg-light position-relative rounded rounded-2 my-2"
+          class="product-card bg-white position-relative rounded-3 my-2 shadow-sm border border-1 border-primary-subtle"
           *ngFor="let detalle of detallePedido"
         >
-          <div class="card-content row">
-            <div class="img-container img-thumbnail col-5 align-items-center">
+          <div class="card-content row align-items-center p-2">
+            <div class="img-container img-thumbnail col-4 d-flex align-items-center justify-content-center bg-light border-0">
               <img
-                class="object-fit-fill border rounded"
+                class="object-fit-fill border rounded-2"
                 [src]="detalle.imageURL"
                 alt="{{ detalle.producto }}"
                 id="imageProducto"
+                style="max-width: 80px; max-height: 80px;"
               />
             </div>
-
-            <div class="product-info col-7">
-              <h5 class="">{{ detalle.producto }}</h5>
-              <hr />
-              <h6>Cantidad: {{ detalle.cantidad }}</h6>
-              <h6>Precio: $ {{ detalle.precio }}</h6>
-              <hr />
-              <h6 style="color: rgb(2, 54, 165)">
-                Subtotal: $ {{ detalle.precio * detalle.cantidad }}
-              </h6>
+            <div class="product-info col-8">
+              <h5 class="fw-bold text-primary mb-1">{{ detalle.producto }}</h5>
+              <div class="d-flex flex-wrap gap-2 small mb-1">
+                <span class="badge bg-secondary-subtle text-secondary">Cantidad: {{ detalle.cantidad }}</span>
+                <span class="badge bg-info-subtle text-info">Precio: ${{ detalle.precio }}</span>
+              </div>
+              <div class="fw-semibold text-success mb-1">Subtotal: ${{ detalle.precio * detalle.cantidad }}</div>
               <button
                 type="button"
-                class="btn delete-icon"
+                class="btn btn-outline-danger btn-sm delete-icon"
                 (click)="eliminarDetalle(detalle)"
+                title="Eliminar producto"
               >
-                <li class="fas fa-trash-alt"></li>
+                <i class="fas fa-trash-alt"></i> Quitar
               </button>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    @if (detallePedido.length!=0) {    <p class="h5 bg-info-subtle text-info-emphasis text-end total">
-      Total a abonar : $ {{ total
-      }}<a style="font-size: small">(iva Incluido)</a>
-    </p>
-
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <!-- <button type="button" class="btn btn-secondary">Vaciar Carrito</button> -->
-      <button type="button" class="btn btn-secondary" (click)="cerrarSidebar()">
-        Añadir + Productos
-      </button>
-      <button 
-        type="button" 
-        class="btn btn-success"
-        (click)="irAPagar()" 
-      >
-        Confirmar Compra
-      </button>
-    </div>
+    @if (detallePedido.length!=0) {
+      <p class="h5 bg-primary-subtle text-primary-emphasis total rounded-3 p-2 mt-2 text-center">
+        Total a abonar : <span class="fw-bold">$ {{ total }}</span>
+        <span class="fs-6">(IVA Incluido)</span>
+      </p>
+      <div class="btn-group w-100 mt-2" role="group" aria-label="Botones carrito">
+        <button type="button" class="btn btn-add-productos" (click)="cerrarSidebar()">
+          Añadir + Productos
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary fw-bold"
+          (click)="irAPagar()" 
+        >
+          Confirmar Compra
+        </button>
+      </div>
     }
   </div>
 </aside>
@@ -106,9 +104,9 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Domicilio de entrega</h5>
+    <div class="modal-content rounded-4">
+      <div class="modal-header bg-primary-subtle rounded-top-4">
+        <h5 class="modal-title text-primary">Domicilio de entrega</h5>
         <button
           type="button"
           class="btn-close"
@@ -119,16 +117,17 @@
       <div class="modal-body">
         <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
           <div class="mb-3">
-            <label for="domicilio" class="form-label"
+            <label for="domicilio" class="form-label fw-semibold text-primary"
               >Domicilio de entrega:</label
             >
             <input
               type="text"
-              class="form-control"
+              class="form-control border-primary-subtle"
               id="domicilio"
-              placeholder="Ingrese su domicilio"
+              placeholder="Ingrese su domicilio o se usará el de su perfil"
               formControlName="domicilio"
             />
+            <small class="text-muted">Si no especifica una dirección, se utilizará la guardada en su perfil.</small>
             @if(Domicilio?.errors && Domicilio?.touched) {
               @if(Domicilio?.hasError('required')) {
               <p class="text-danger">El domicilio es requerido</p>
@@ -137,22 +136,23 @@
           <div class="mb-3">
             <label for="info" class="form-label">Información adicional:</label>
             <textarea
-              class="form-control"
+              class="form-control border-primary-subtle"
               formControlName="info"
               id="info"
               rows="3"
             ></textarea>
           </div>
-
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
             >
               Cancelar
             </button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary fw-bold">
+              Guardar
+            </button>
           </div>
         </form>
       </div>

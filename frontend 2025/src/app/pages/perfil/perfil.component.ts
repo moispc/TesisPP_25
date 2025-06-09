@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from '../../model/usuario.model';
 import { ImageUploadService } from '../../services/image-upload.service';
+import { SharedDataService } from '../../services/shared-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -21,13 +23,13 @@ export class PerfilComponent implements OnInit {
   // Variables para la imagen de perfil
   imagenPerfil: string | null = null;
   imagenError: string | null = null;
-  imagenArchivo: File | null = null;
-  
-  constructor(
+  imagenArchivo: File | null = null;    constructor(
     private fb: FormBuilder,
     public authService: AuthService,
     private toastr: ToastrService,
-    private imageUploadService: ImageUploadService // Inyectar el servicio
+    private imageUploadService: ImageUploadService, // Inyectar el servicio
+    private sharedDataService: SharedDataService,
+    private router: Router
   ) {
     this.perfilForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -41,16 +43,18 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
     // Obtener la URL de la imagen de perfil desde localStorage (que fue guardada tras login)
     this.imagenPerfil = localStorage.getItem('imagenPerfil') || null;
-    // Cargar el resto de los datos del usuario como antes
+    // Obtener la dirección y otros datos del usuario desde el localStorage (guardados tras login)
     const nombre = localStorage.getItem('nameUser') || '';
     const [nombreUsuario, apellidoUsuario] = nombre.split(' ');
     const email = localStorage.getItem('emailUser') || 'usuario@ejemplo.com';
+    const direccion = localStorage.getItem('direccion') || '';
+    const telefono = localStorage.getItem('telefono') || '123456789';
     this.perfilForm.patchValue({
       nombre: nombreUsuario,
       apellido: apellidoUsuario || '',
       email: email,
-      telefono: '123456789',
-      direccion: 'Dirección de ejemplo'
+      telefono: telefono,
+      direccion: direccion
     });
     const fecha = localStorage.getItem('fechaActualizacion');
     if (fecha) {
@@ -148,14 +152,21 @@ export class PerfilComponent implements OnInit {
       ...this.perfilForm.value,
       id_usuario: userId,
       imagen_perfil_url: imagenPerfilUrl, // Siempre enviar la URL actual
-      fechaActualizacion: fechaActualizacionStr
+      fechaActualizacion: fechaActualizacionStr,
+      direccion: this.perfilForm.value.direccion // Asegura que la dirección se envía
     };
 
     this.authService.updateUser(userId, datosUsuario).subscribe({
       next: (response) => {
-        this.toastr.success('Perfil actualizado con éxito');
-        localStorage.setItem('nameUser', `${datosUsuario.nombre} ${datosUsuario.apellido}`);
+        this.toastr.success('Perfil actualizado con éxito');        localStorage.setItem('nameUser', `${datosUsuario.nombre} ${datosUsuario.apellido}`);
         localStorage.setItem('fechaActualizacion', fechaActualizacionStr);
+        
+        // Utilizar el servicio compartido para actualizar la dirección
+        if (datosUsuario.direccion && datosUsuario.direccion.trim() !== '') {
+          this.sharedDataService.actualizarDireccion(datosUsuario.direccion);
+        }
+        
+        localStorage.setItem('telefono', datosUsuario.telefono || '');
         this.usuario.fechaActualizacion = fechaActualizacionStr;
         this.cargando = false;
       },
@@ -166,7 +177,6 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
-
   eliminarCuenta(): void {
     const userId = localStorage.getItem('idUser');
     if (!userId) {
@@ -179,6 +189,8 @@ export class PerfilComponent implements OnInit {
         next: () => {
           // El método logout ya está siendo llamado dentro de deleteUser
           this.toastr.success('Cuenta eliminada correctamente');
+          // Redirigir al usuario a la página de login
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           this.toastr.error('Error al eliminar la cuenta');

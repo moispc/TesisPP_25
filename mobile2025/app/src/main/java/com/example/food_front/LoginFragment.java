@@ -112,8 +112,9 @@ public class LoginFragment extends Fragment {
 
                             // Agregar log para ver la URL que viene del backend
                             Log.d("ImagenPerfil", "URL recibida del backend: " + profileImageUrl);
-
+                            Log.d("LoginFragment", "Email guardado en SessionManager: " + email);
                             sessionManager.saveToken(token);  // Guardar el token para futuras solicitudes
+                            sessionManager.saveEmail(email);  // Guardar el email para futuras solicitudes
                             profileManager.saveInfo(name, surname, email, phone, profileImageUrl);  // Guardar info incluyendo imagen
 
                             // Solo guardar la URL y reemplazar el fragmento
@@ -164,4 +165,3 @@ public class LoginFragment extends Fragment {
         fragmentTransaction.commit();
     }
 }
-

@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());        // Initialize SessionManager and ProfileManager
+        super.onCreate(savedInstanceState);        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        
+        // Initialize SessionManager and ProfileManager
         sessionManager = new SessionManager(this);
         profileManager = new ProfileManager(this);
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if a token exists to determine the initial fragment
         if (sessionManager.getToken() != null) {
-            mostrarHome(); // Show HomeFragment if logged in
+            mostrarHomeLimpiandoBackStack(); // Show HomeFragment if logged in, limpiando el back stack
         } else {
             mostrarLogin(); // Show LoginFragment if not logged in
         }
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
-                    mostrarHome(); // Show HomeFragment
+                    mostrarHomeLimpiandoBackStack(); // Show HomeFragment limpiando el back stack
                     return true;
                 } else if (itemId == R.id.profile || itemId == R.id.menu || itemId == R.id.carrito) {
                     if (sessionManager.getToken() == null ){
@@ -74,6 +74,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // Manejar deep link también al abrir la app desde cerrado
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction()) && intent.getData() != null) {
+            String scheme = intent.getData().getScheme();
+            String host = intent.getData().getHost();
+            if ("foodapp".equals(scheme) && "success".equals(host)) {
+                getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, new SuccessFragment())
+                    .addToBackStack(null)
+                    .commit();
+                return;
+            }
+        }
     }
 
     public void mostrarLogin() {
@@ -86,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.fragment_container_view, new HomeFragment(), "HomeFragment");
+        fragmentTransaction.commit();
+    }
+
+    public void mostrarHomeLimpiandoBackStack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_view, new HomeFragment(), "HomeFragment");
         fragmentTransaction.commit();
     }
@@ -184,6 +207,25 @@ public class MainActivity extends AppCompatActivity {
             actualizarFragmentosDirectamente(profileManager.getProfileImageUrl());
         } catch (Exception e) {
             Log.e("MainActivity", "Error en actualizarTodasLasImagenes: " + e.getMessage());
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        // Manejo del deep link foodapp://success
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction()) && intent.getData() != null) {
+            String scheme = intent.getData().getScheme();
+            String host = intent.getData().getHost();
+            if ("foodapp".equals(scheme) && "success".equals(host)) {
+                // Redirigir directamente al fragmento de éxito
+                getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_view, new SuccessFragment())
+                    .addToBackStack(null)
+                    .commit();
+            }
         }
     }
 }

@@ -1,0 +1,32 @@
+<!-- Ventana flotante del Food Bot -->
+<div class="chatbot-float" [class.open]="isOpen">
+  <div class="chatbot-header" (click)="toggleChat()">
+    <span>
+      <img src="assets/iconoPrincipal.ico" alt="Food Bot" class="foodbot-icon" /> Food Bot
+    </span>
+    <button class="close-btn" *ngIf="isOpen" (click)="toggleChat(); $event.stopPropagation()">×</button>
+  </div>
+  <!-- Mensaje flotante de bienvenida tipo globo de chat solo en Home -->
+  <div *ngIf="!isOpen && isHome" class="chatbot-bubble-welcome">
+    <span>👋 Hola, soy Eva, tu asistente virtual</span>
+  </div>
+  <div class="chatbot-body" *ngIf="isOpen">
+    <div class="chatbot-header-inside">
+      <span class="julia-name">Eva</span>
+      <span class="julia-welcome">¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte?</span>
+    </div>
+    <div class="chatbot-messages">
+      <div *ngFor="let msg of messages" [ngClass]="{'user': msg.from==='user', 'bot': msg.from==='bot'}">
+        {{msg.text}}
+      </div>
+    </div>
+    <div class="chatbot-options" *ngIf="showOptions">
+      <button (click)="handleOption('quienes')">¿Quiénes somos?</button>
+      <button (click)="handleOption('quehacemos')">¿Qué hacemos?</button>
+      <button (click)="handleOption('carta')">Ver la carta</button>
+      <button (click)="handleOption('registro')">Registrarme</button>
+      <button (click)="handleOption('pagos')">Métodos de pago</button>
+    </div>
+    <button class="volver-btn" *ngIf="!showOptions" (click)="resetOptions()">Volver</button>
+  </div>
+</div>

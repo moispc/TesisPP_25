@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
+}
 
-
+repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://artifacts.mercadolibre.com/repository/android-releases") }
 }
 
 android {
@@ -48,11 +52,11 @@ dependencies {
     //recyclerview
     implementation(libs.recyclerview)    //para imagenes
     implementation(libs.glide)
-    annotationProcessor(libs.compiler)
-    // Agregar CircleImageView para imágenes de perfil circulares
+    annotationProcessor(libs.compiler)    // Agregar CircleImageView para imágenes de perfil circulares
     implementation("de.hdodenhof:circleimageview:3.1.0")
     
-    // No usaremos el SDK de Mercado Pago para evitar problemas de compatibilidad
+    // WebView para implementar nuestra propia integración con MercadoPago
+    implementation("androidx.webkit:webkit:1.6.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
@@ -62,10 +66,15 @@ dependencies {
     implementation(libs.fragment)
     implementation(libs.volley)
 
+    // Cloudinary para subida de imágenes
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+    
+    // Para manejar JSON
+    implementation("com.google.code.gson:gson:2.10.1")
+
 }
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
-

@@ -35,11 +35,23 @@ export class PedidosService {
   getDetallePedido():Observable <Carrito[]> {
 
     return this.http.get<Carrito[]>(this.url + 'ver');
-  }
-
-  confirmarPedido():Observable<any>{
+  }  confirmarPedido():Observable<any>{
+    // Verificar si hay una dirección de entrega en el pedido actual
+    // Si no hay, intentar usar la dirección del perfil
+    const pedidoActual = this.getPedido();
+    if (pedidoActual && (!pedidoActual.direccion || pedidoActual.direccion.trim() === '')) {
+      const direccionPerfil = localStorage.getItem('direccion');
+      if (direccionPerfil && direccionPerfil.trim() !== '') {
+        pedidoActual.direccion = direccionPerfil;
+        this.setPedido(pedidoActual);
+      } else {
+        // Si no hay dirección de perfil, usar un valor informativo
+        pedidoActual.direccion = "Por favor contactar para confirmar dirección";
+        this.setPedido(pedidoActual);
+      }
+    }
+    
     const hola={};
-
     return this.http.post(this.url + 'confirmar/',hola);
   }
 

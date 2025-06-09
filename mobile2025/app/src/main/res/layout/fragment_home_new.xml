@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg_dark" tools:context=".MainActivity">
+    <!-- Layout horizontal para foto de perfil y bienvenida -->
+    <LinearLayout
+        android:id="@+id/layoutWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/default_profile"
+            android:layout_marginEnd="8dp"/>
+        <TextView
+            android:id="@+id/txtUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Bienvenido Pablo"
+            android:textSize="22sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <!-- Botón para ir a la página web con icono de internet -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Ir a la página web"
+        app:backgroundTint="#C77600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_compass"
+        app:tint="@android:color/white" />
+
+    <ImageView android:id="@+id/imageView2" android:layout_width="409dp" android:layout_height="118dp" app:layout_constraintBottom_toTopOf="@+id/btnbuscar" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/layoutWelcome" app:srcCompat="@mipmap/hambur"/>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:foregroundTint="#020304"
+        android:text="Tu comida a un click de distancia"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.156"/>
+    <Button android:id="@+id/btnbuscar" android:layout_width="349dp" android:layout_height="61dp" android:backgroundTint="#C77600" android:fontFamily="@font/roboto_bold" android:text="Buscar productos" android:textAlignment="textStart" android:textColor="#FFFFFF" android:textSize="18sp" app:icon="@android:drawable/ic_menu_search" app:iconSize="30dp" app:iconTint="#FFFFFF" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.47" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.26999998" app:strokeColor="#101010" app:strokeWidth="1dp"/>
+    <ScrollView android:id="@+id/scrollView6" android:layout_width="0dp" android:layout_height="55dp" android:layout_marginStart="1dp" android:layout_marginTop="16dp" android:layout_marginEnd="1dp" android:layout_marginBottom="1dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnbuscar" app:layout_constraintVertical_bias="0.0">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <Button android:id="@+id/btn3" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="3dp" android:layout_marginRight="1dp" android:layout_weight="1" android:backgroundTint="#C77600" android:duplicateParentState="true" android:padding="3dp" android:paddingLeft="3dp" android:paddingTop="3dp" android:paddingRight="3dp" android:paddingBottom="3dp" android:tag="todos" android:text="Todos" android:textColor="#FFFFFF" android:textSize="10sp" app:cornerRadius="6dp"/>
+            <Button android:id="@+id/btn1" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="3dp" android:layout_marginRight="1dp" android:layout_weight="1" android:backgroundTint="#C77600" android:duplicateParentState="true" android:padding="3dp" android:paddingLeft="3dp" android:paddingTop="3dp" android:paddingRight="3dp" android:paddingBottom="3dp" android:tag="empanadas" android:text="Hamburguesas" android:textColor="#FFFFFF" android:textSize="10sp" app:cornerRadius="6dp"/>
+            <Button android:id="@+id/btn" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="3dp" android:layout_marginRight="1dp" android:layout_weight="1" android:backgroundTint="#C77600" android:duplicateParentState="true" android:padding="3dp" android:paddingLeft="3dp" android:paddingTop="3dp" android:paddingRight="3dp" android:paddingBottom="3dp" android:tag="empanadas" android:text="Empanadas" android:textColor="#FFFFFF" android:textSize="10sp" app:cornerRadius="6dp"/>
+            <Button android:id="@+id/btn4" android:layout_width="wrap_content" android:layout_height="56dp" android:layout_marginLeft="3dp" android:layout_marginRight="3dp" android:layout_weight="1" android:backgroundTint="#C77600" android:duplicateParentState="true" android:padding="3dp" android:paddingLeft="3dp" android:paddingTop="3dp" android:paddingRight="3dp" android:paddingBottom="3dp" android:tag="empanadas" android:text="Lomitos" android:textColor="#FFFFFF" android:textSize="10sp" app:cornerRadius="6dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="124dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView6"
+        app:srcCompat="@mipmap/hamburguesas1" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="124dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView6"
+        app:srcCompat="@mipmap/lomitos1" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="124dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView6"
+        app:srcCompat="@mipmap/empanadas1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

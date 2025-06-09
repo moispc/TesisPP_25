@@ -116,7 +116,7 @@ class MercadoPagoService:
     def __init__(self):
         self.sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
     
-    def create_preference(self, items, external_reference, payer_email=None, notification_url=None):
+    def create_preference(self, items, external_reference, payer_email=None, notification_url=None, back_urls=None):
         """
         Crea una preferencia de pago en Mercado Pago y verifica que esté activa antes de devolver la URL
         """
@@ -125,7 +125,7 @@ class MercadoPagoService:
             preference_data = {
                 "items": items,
                 "external_reference": str(external_reference),
-                "back_urls": {
+                "back_urls": back_urls if back_urls else {
                     "success": "https://ispcfood.netlify.app/exito",
                     "failure": "https://ispcfood.netlify.app/error",
                     "pending": "https://ispcfood.netlify.app/pendiente"

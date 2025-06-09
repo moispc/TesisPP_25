@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Estilo para aplicar a imágenes que deban ser más pequeñas que el tamaño predeterminado -->
+    <style name="SmallAppIcon">
+        <item name="android:maxWidth">24dp</item>
+        <item name="android:maxHeight">24dp</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+</resources>

@@ -28,12 +28,9 @@ export const routes: Routes = [
     {path:"exito", component:ExitoComponent},
     {path:"login", component:InicioSesionComponent},
     {path:'exitoNuevo', component:ExitoNuevoUsuarioComponent},
-    {path:"quienes-somos", component:NosotrosDevsComponent},
-    {path:"contacto", component:ContactoComponent},
+    {path:"quienes-somos", component:NosotrosDevsComponent},    
+    {path:"contacto", component:ContactoComponent},    
     {path:"serverError", component:ServerErrorComponent},
     {path:"admin-productos", component:AdminProductosComponent, canActivate:[authGuard]},
     {path:'**', component:Pagina404Component},
-
-
-
 ];

@@ -28,26 +28,31 @@
   </div>
   <!-- Tabla de pedidos cuando hay datos -->
   <div *ngIf="!isLoading && pedidosFiltrados && pedidosFiltrados.length > 0" class="table-responsive mt-3">
-    <table class="table table-bordered table-hover">
-      <thead class="table-dark">
+    <table class="table table-bordered table-hover text-center">      <thead class="table-dark">
         <tr>
+          <th scope="col">ID Pedido</th>
           <th scope="col">Fecha</th>
           <th scope="col">Dirección de Entrega</th>
           <th scope="col">Estado</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Precio Unitario</th>
           <th scope="col">Subtotal</th>
+          <th *ngIf="activeTab === 'Pendientes'" scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let pedido of pedidosFiltrados">
-          <td>{{ pedido.fecha_pedido }}</td>
+          <td>#{{ pedido.id_pedidos }}</td>
+          <td>{{ pedido.fecha_pedido | date:'dd/MM/yyyy' }}</td>
           <td>{{ pedido.direccion_entrega }}</td>
           <td>
-            <span *ngIf="pedido.estado === 'Aprobado por Chayanne'">
-              {{ pedido.estado }} <i class="bi bi-check-circle-fill text-success"></i>
+            <span *ngIf="pedido.estado === 'Aprobado por Chayanne' || pedido.estado === 'Aprobado'">
+              <span class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i>{{ pedido.estado }}</span>
             </span>
-            <span *ngIf="pedido.estado !== 'Aprobado por Chayanne'">
+            <span *ngIf="pedido.estado === 'Entregado'">
+              <span class="text-primary fw-bold"><i class="bi bi-truck me-1"></i>{{ pedido.estado }}</span>
+            </span>
+            <span *ngIf="pedido.estado !== 'Aprobado por Chayanne' && pedido.estado !== 'Aprobado' && pedido.estado !== 'Entregado'">
               {{ pedido.estado }}
             </span>
           </td>
@@ -71,6 +76,9 @@
                 <strong>{{ detalle.subtotal ? (detalle.subtotal | currency:'ARS':'symbol':'1.0-0') : 'N/A' }}</strong>
               </li>
             </ul>
+          </td>
+          <td *ngIf="activeTab === 'Pendientes'">
+            <!-- Botón de cancelar eliminado -->
           </td>
         </tr>
       </tbody>

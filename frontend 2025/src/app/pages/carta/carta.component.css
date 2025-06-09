@@ -40,6 +40,11 @@ body {
   height: 100%;
 }
 
+#wrapper_box img.empanada-pollo {
+  height: 120px !important;
+  object-fit: cover;
+}
+
 #wrapper_box img:hover {
   transform: scale(1.05);
 

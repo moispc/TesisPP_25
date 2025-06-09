@@ -88,11 +88,26 @@ class CreatePreferenceView(APIView):
         
         # Crear preferencia en Mercado Pago
         notification_url = f"{request.build_absolute_uri('/').rstrip('/')}/payment/webhook/"
+        # Definir back_urls según el entorno
+        env = request.data.get('env') or request.POST.get('env')
+        if env == 'mobile':
+            back_urls = {
+                "success": "foodapp://success",
+                "failure": "https://ispcfood.netlify.app/error",
+                "pending": "https://ispcfood.netlify.app/pendiente"
+            }
+        else:
+            back_urls = {
+                "success": "https://ispcfood.netlify.app/exito",
+                "failure": "https://ispcfood.netlify.app/error",
+                "pending": "https://ispcfood.netlify.app/pendiente"
+            }
         preference = mp_service.create_preference(
             items=items,
             external_reference=str(payment_request.id),
             payer_email=email,
-            notification_url=notification_url
+            notification_url=notification_url,
+            back_urls=back_urls
         )
         
         if not preference:

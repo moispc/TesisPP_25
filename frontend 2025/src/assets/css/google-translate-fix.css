@@ -1,0 +1,67 @@
+/* Estilos para ocultar elementos de Google Translate */
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Ocultar todos los elementos de la interfaz de Google Translate */
+.skiptranslate,
+.goog-te-banner-frame,
+.goog-te-gadget-icon,
+.goog-te-gadget,
+.goog-te-combo,
+.goog-te-menu-frame,
+#goog-gt-tt,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-aZ2wEe {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.goog-te-menu-value,
+.goog-te-gadget-simple {
+  display: none !important;
+}
+
+/* Eliminar el borde superior que añade Google Translate */
+body > .skiptranslate {
+  display: none !important;
+}
+
+/* Forzar que no haya desplazamiento */
+body.translated-rtl,
+body.translated-ltr {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Restablecer posición de todos los elementos */
+html[lang="en"] body,
+html[lang="pt"] body {
+  top: 0 !important;
+}
+
+/* Estilo para evitar el desplazamiento hacia abajo que añade Google */
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Ocultar elemento VK que aparece a veces al traducir */
+#gt-nvframe, 
+.goog-tooltip,
+.goog-tooltip:hover, 
+.goog-text-highlight,
+.goog-text-highlight:hover {
+  display: none !important;
+  visibility: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Asegurarse de que el cuerpo de la página no tenga el desplazamiento que Google añade */
+body[style] {
+  top: 0 !important;
+}

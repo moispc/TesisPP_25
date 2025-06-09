@@ -15,6 +15,7 @@ class PaymentRequest(models.Model):
     cart_data = models.JSONField(null=True, blank=True, help_text="Datos del carrito del usuario")
     created_at = models.DateTimeField(default=timezone.now, help_text="Fecha de creación")
     updated_at = models.DateTimeField(auto_now=True, help_text="Fecha de actualización")
+    order_confirmed = models.BooleanField(default=False, help_text="Indica si el pedido fue confirmado")
     
     def __str__(self):
         return f"Pago {self.id} - Estado: {self.status}"

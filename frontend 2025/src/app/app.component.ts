@@ -1,18 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { CheckoutComponent } from './shared/checkout/checkout.component';
-import { CarritoComponent } from './pages/carrito/carrito.component';
-import { ExitoComponent } from './pages/exito/exito.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CartaComponent } from './pages/carta/carta.component';
+import { RouterOutlet, Router } from '@angular/router';
 import { NavComponent } from './shared/nav/nav.component';
-import { RegistroComponent } from './pages/auth/registro/registro.component';
-import { NosotrosDevsComponent} from './pages/nosotros-devs/nosotros-devs.component';
+import { CarritoComponent } from './pages/carrito/carrito.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.component';
-import { ContactoComponent } from './pages/contacto/contacto.component';
+import { ContactoService } from './services/contacto.service';
+import { LanguageSelectorComponent } from './shared/language-selector/language-selector.component';
+import { ChatBotComponent } from './shared/chat-bot/chat-bot.component';
 
 
 @Component({
@@ -23,16 +17,9 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
     RouterOutlet,
     CarritoComponent,
     CommonModule,
-    DashboardComponent,
-    CheckoutComponent,
-    HomeComponent,
-    ExitoComponent,
-    CartaComponent,
-    RegistroComponent,
-    NosotrosDevsComponent,
     FooterComponent,
-    ContactoComponent,
-    InicioSesionComponent
+    LanguageSelectorComponent,
+    ChatBotComponent
   ],
 
   templateUrl: './app.component.html',
@@ -43,11 +30,17 @@ export class AppComponent {
   vistaUsuario = false;
   estaAutenticado = false;
   esAdmin = false;
+  isHome = false;
 
-  constructor() {
+  constructor(public contactoService: ContactoService, private router: Router) {
     const email = localStorage.getItem('emailUser');
     this.estaAutenticado = !!localStorage.getItem('authToken');
     this.esAdmin = email === 'admin@admin.com';
+
+    // Detectar ruta actual
+    this.router.events.subscribe(() => {
+      this.isHome = this.router.url === '/home' || this.router.url === '/';
+    });
   }
 
   setVistaUsuario(valor: boolean) {

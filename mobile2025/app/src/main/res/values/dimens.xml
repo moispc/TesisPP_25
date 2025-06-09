@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tamaños de iconos reducidos -->
+    <dimen name="app_icon_size_small">24dp</dimen>
+    <dimen name="app_icon_padding">12dp</dimen>
+    <dimen name="app_icon_launcher_size">36dp</dimen>
+    <dimen name="app_icon_launcher_padding">18dp</dimen>
+</resources>

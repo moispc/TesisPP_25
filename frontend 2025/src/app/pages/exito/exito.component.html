@@ -8,8 +8,7 @@
             Esta es la factura por el pago de
             <strong class="compra-total">$ {{ pedido.total }}</strong> que
             hiciste a ISPC FooD.
-          </p>
-
+          </p>          
           <div class="border-top border-gray-200 pt-4 mt-4">
             <div class="row">
               <div class="col-md-6">
@@ -21,6 +20,35 @@
                 <strong class="fecha-pago">{{ fechaActual }}</strong>
               </div>
             </div>
+          </div>
+
+          <!-- Info de MercadoPago si existe -->
+          <div class="border-top border-gray-200 mt-4 py-4" *ngIf="paymentId">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-muted mb-2">ID de Pago (MercadoPago)</div>
+                <strong>{{ paymentId }}</strong>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <div class="text-muted mb-2">Estado</div>
+                <strong [ngClass]="{'text-success': status === 'approved', 'text-warning': status === 'in_process', 'text-danger': status === 'rejected'}">
+                  {{ status === 'approved' ? 'Aprobado' : (status === 'in_process' ? 'En proceso' : (status === 'rejected' ? 'Rechazado' : status)) }}
+                </strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Logo Mercado Pago si el pago fue con MercadoPago -->
+          <div class="text-center my-3" *ngIf="paymentId">
+            <img src="https://contactopuro.com/files/mercadopago-81090.png" alt="Mercado Pago" style="height:48px;width:auto;object-fit:contain;" />
+          </div>
+
+          <!-- Ticket Mercado Pago completo si existe -->
+          <div *ngIf="mercadoPagoTicket" class="alert alert-info mt-4">
+            <h5 class="mb-2">Ticket Mercado Pago</h5>
+            <pre style="white-space:pre-wrap;word-break:break-all;font-size:0.95em;background:#f8f9fa;border-radius:8px;padding:12px;">
+              {{ mercadoPagoTicket | json }}
+            </pre>
           </div>
 
           <div class="border-top border-gray-200 mt-4 py-4">
@@ -97,7 +125,4 @@
       </div>
     </div>
   </div>
-  <p class="text-center" id="textCountdown">
-    Volveremos a la página principal en {{ contador }} segundos
-  </p>
 </div>

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.food_front.utils.ProfileManager;
 import com.example.food_front.utils.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +35,14 @@ public class DatosEntregaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_datos_entrega, container, false);
+
+        // Obtener la dirección guardada en el login
+        EditText editTextDireccion = view.findViewById(R.id.editTextDireccionEntrega);
+        ProfileManager profileManager = new ProfileManager(requireContext());
+        String direccion = profileManager.getAddress();
+        if (direccion != null && !direccion.isEmpty()) {
+            editTextDireccion.setText(direccion);
+        }
 
         // Find the button and set the click listener
         Button button = view.findViewById(R.id.btnHacerPedido);
@@ -57,19 +67,17 @@ public class DatosEntregaFragment extends Fragment {
         SessionManager sessionManager = new SessionManager(requireContext());
         String token = sessionManager.getToken();
 
-        // POST request
+        // POST request para confirmar pedido
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // If the request is successful, show a Toast and switch fragments
-                        Toast.makeText(requireContext(), "Pedido confirmado", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new PaymentFragment());
+                        // Si el pedido se confirma, crear preferencia de pago en backmp
+                        crearPreferenciaPago(token);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // Handle error
                 Snackbar.make(requireView(), "Error al confirmar pedido. Inténtalo más tarde.",
                         Snackbar.LENGTH_LONG).show();
                 Log.e("VolleyError", "Detalles del error", error);
@@ -87,6 +95,52 @@ public class DatosEntregaFragment extends Fragment {
         queue.add(stringRequest);
     }
 
+    /**
+     * Crea la preferencia de pago en el backend de MercadoPago
+     */
+    private void crearPreferenciaPago(String token) {
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
+        String url = "https://backmp.onrender.com/payment/create-preference/";
+
+        ProfileManager profileManager = new ProfileManager(requireContext());
+        String email = profileManager.getEmail();
+        if (email == null) email = "";
+
+        // Construir el body JSON
+        String body = String.format("{\"user_token\":\"%s\",\"email\":\"%s\"}", token, email);
+
+        com.android.volley.toolbox.StringRequest request = new com.android.volley.toolbox.StringRequest(
+                Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Si la preferencia se crea correctamente, pasar a PaymentFragment
+                        Toast.makeText(requireContext(), "Pedido confirmado", Toast.LENGTH_SHORT).show();
+                        replaceFragment(new PaymentFragment());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Snackbar.make(requireView(), "Error al crear preferencia de pago.", Snackbar.LENGTH_LONG).show();
+                        Log.e("VolleyError", "Error al crear preferencia de pago", error);
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            public byte[] getBody() {
+                return body.getBytes();
+            }
+        };
+        queue.add(request);
+    }
 
     private void replaceFragment(Fragment newFragment) {
         if (isAdded()) {

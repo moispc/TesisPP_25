@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">food_front</string>
+    <string name="app_name">Food ISPC</string>
     <string name="tarjetas_de_credito1">Tarjetas de Crédito</string>
     <string name="mercado_pago1">Mercado Pago</string>
     <string name="paypal1">Paypal</string>
@@ -32,5 +32,21 @@
     <string name="combo_3_docenas_de_empanadas">Combo 3 Docenas</string>
     <string name="carrito">Carrito</string>
     <string name="datos_entrega">Datos Entrega</string>
+
+    <!-- Nuevas cadenas para el HomeFragment -->
+    <string name="bienvenido_usuario">Bienvenido %1$s</string>
+    <string name="ir_a_pagina_web">Ir a la página web</string>
+
+    <string-array name="metodos_pago">
+        <item>Selecciona en la próxima opción</item>
+        <item>Efectivo</item>
+        <item>Tarjeta de crédito</item>
+        <item>Mercado Pago</item>
+        <item>Paypal</item>
+    </string-array>
+
+    <!-- Cadenas para el EULA -->
+    <string name="eula_title">Acuerdo de Licencia de Usuario Final (EULA)</string>
+    <string name="eula_text">Este Acuerdo de Licencia de Usuario Final ("EULA") es un acuerdo legal entre usted (usuario final) y la aplicación. Al utilizar esta aplicación, usted acepta los términos de este EULA.\n\n1. Uso de la aplicación\nEsta aplicación está destinada únicamente para uso personal y no comercial.\n\n2. Propiedad\nTodos los derechos, títulos e intereses sobre la aplicación pertenecen a sus desarrolladores.\n\n3. Restricciones\nNo puede modificar, descompilar, realizar ingeniería inversa ni distribuir la aplicación sin autorización.\n\n4. Privacidad\nLa aplicación puede recopilar datos de uso de forma anónima para mejorar la experiencia del usuario.\n\n5. Exclusión de garantías\nLa aplicación se proporciona "tal cual" sin garantías de ningún tipo.\n\n6. Limitación de responsabilidad\nEn ningún caso los desarrolladores serán responsables por daños derivados del uso o la imposibilidad de uso de la aplicación.\n\n7. Cambios en el EULA\nNos reservamos el derecho de modificar este EULA en cualquier momento.\n\n8. Texto largo para desalentar la lectura\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc, eget aliquam massa nisi nec erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin vel ante a orci tempus eleifend ut et magna.\n\nSuspendisse dignissim, nunc nec laoreet consequat, purus nunc porta lorem, ac dictum urna augue nec urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat, sapien sed venenatis dictum, nisi erat facilisis erat, vitae dictum augue enim nec urna. Etiam euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc, eget aliquam massa nisi nec erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit.\n\nSi no está de acuerdo con estos términos, no utilice la aplicación.</string>
 </resources>
 

@@ -12,6 +12,7 @@ public class ProfileManager {
     private static final String KEY_PHONE = "telefono";
     private static final String KEY_PROFILE_IMAGE = "imagen_perfil_url";
     private static final String KEY_LAST_IMAGE_UPDATE = "last_image_update";
+    private static final String KEY_ADDRESS = "direccion"; // Nueva clave para dirección
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -47,7 +48,24 @@ public class ProfileManager {
         Log.d("auth", "Email guardado despues del login:" + email );
         Log.d("auth", "Telefono guardado despues del login:" + phone );
         Log.d("auth", "URL de imagen de perfil guardada:" + profileImageUrl);
-    }    // Guardar solo la URL de la imagen de perfil
+    }    // Guardar los datos del usuario incluyendo la dirección
+    public void saveInfo(String name, String surname, String email, String phone, String profileImageUrl, String address) {
+        editor.putString(KEY_NAME, name);
+        editor.putString(KEY_SURNAME, surname);
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_PHONE, phone);
+        editor.putString(KEY_PROFILE_IMAGE, profileImageUrl);
+        editor.putString(KEY_ADDRESS, address);
+        editor.apply();
+        Log.d("auth", "Nombre guardado despues del login:" + name );
+        Log.d("auth", "Apellido guardado despues del login:" + surname );
+        Log.d("auth", "Email guardado despues del login:" + email );
+        Log.d("auth", "Telefono guardado despues del login:" + phone );
+        Log.d("auth", "URL de imagen de perfil guardada:" + profileImageUrl);
+        Log.d("auth", "Dirección guardada:" + address);
+    }
+
+    // Guardar solo la URL de la imagen de perfil
     public void saveProfileImageUrl(String profileImageUrl) {
         // Asegurarse de guardar la URL base sin parámetros de timestamp
         String cleanUrl = profileImageUrl;
@@ -95,7 +113,11 @@ public class ProfileManager {
 
     public String getPhone() {
         return sharedPreferences.getString(KEY_PHONE, null);
-    }    public String getProfileImageUrl() {
+    }    public String getAddress() {
+        return sharedPreferences.getString(KEY_ADDRESS, null);
+    }
+
+    public String getProfileImageUrl() {
         String baseUrl = sharedPreferences.getString(KEY_PROFILE_IMAGE, null);
         return baseUrl;
     }
@@ -126,4 +148,3 @@ public class ProfileManager {
         editor.apply();
     }
 }
-
