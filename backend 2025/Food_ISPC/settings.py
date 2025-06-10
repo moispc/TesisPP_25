@@ -37,7 +37,8 @@ ALLOWED_HOSTS = ['backmobile1.onrender.com', 'localhost', '127.0.0.1']
 CORS_ALLOWED_ORIGINS = [
     "https://example.com",
     "http://localhost:4200",
-    "https://ispcfood.netlify.app"
+    "https://ispcfood.netlify.app",
+    "https://moispc.github.io"
 ]
 
 # Logging configuration

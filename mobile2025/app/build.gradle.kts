@@ -9,11 +9,9 @@ repositories {
 }
 
 android {
-    namespace = "com.example.food_front"
-    compileSdk = 34
-
-    defaultConfig {
-        applicationId = "com.example.food_front"
+    namespace = "com.exemple.food_front"
+    compileSdk = 34defaultConfig {
+        applicationId = "com.exemple.food_front"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
