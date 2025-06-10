@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="150" cy="150" r="150"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circleClip)">
+    <rect width="300" height="300" fill="#012169"/>
+    <path d="M0,0 L300,300 M300,0 L0,300" stroke="#fff" stroke-width="60"/>
+    <path d="M0,0 L300,300 M300,0 L0,300" stroke="#c8102e" stroke-width="20"/>
+    <path d="M150,0 L150,300 M0,150 L300,150" stroke="#fff" stroke-width="100"/>
+    <path d="M150,0 L150,300 M0,150 L300,150" stroke="#c8102e" stroke-width="60"/>
+  </g>
+</svg>

@@ -1,0 +1,5 @@
+/*    /index.html   200
+
+/payment/success/*  https://backmp.onrender.com/payment/success/:splat  200
+/payment/webhook/*  https://backmp.onrender.com/payment/webhook/:splat  200
+/payment/health/*   https://backmp.onrender.com/payment/health/:splat   200
