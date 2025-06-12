@@ -19,6 +19,7 @@ export class PerfilComponent implements OnInit {
   perfilForm: FormGroup;
   usuario: any = {};
   cargando = false;
+  refrescando = false; // Para el spinner de refresco
   
   // Variables para la imagen de perfil
   imagenPerfil: string | null = null;
@@ -41,20 +42,45 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Obtener la URL de la imagen de perfil desde localStorage (que fue guardada tras login)
     this.imagenPerfil = localStorage.getItem('imagenPerfil') || null;
-    // Obtener la dirección y otros datos del usuario desde el localStorage (guardados tras login)
-    const nombre = localStorage.getItem('nameUser') || '';
-    const [nombreUsuario, apellidoUsuario] = nombre.split(' ');
-    const email = localStorage.getItem('emailUser') || 'usuario@ejemplo.com';
-    const direccion = localStorage.getItem('direccion') || '';
-    const telefono = localStorage.getItem('telefono') || '123456789';
-    this.perfilForm.patchValue({
-      nombre: nombreUsuario,
-      apellido: apellidoUsuario || '',
-      email: email,
-      telefono: telefono,
-      direccion: direccion
+    this.cargando = true;
+    // Usar el nuevo endpoint /appUSERS/me/ para obtener los datos actualizados
+    this.authService.getUserProfileMe().subscribe({
+      next: (user) => {
+        this.usuario = user;
+        this.perfilForm.patchValue({
+          nombre: user.nombre || '',
+          apellido: user.apellido || '',
+          email: user.email || '',
+          telefono: user.telefono || '',
+          direccion: user.direccion || ''
+        });
+        if (user.imagen_perfil_url) {
+          this.imagenPerfil = user.imagen_perfil_url;
+          localStorage.setItem('imagenPerfil', user.imagen_perfil_url);
+        }
+        localStorage.setItem('nameUser', `${user.nombre} ${user.apellido}`);
+        localStorage.setItem('emailUser', user.email || '');
+        localStorage.setItem('telefono', user.telefono || '');
+        localStorage.setItem('direccion', user.direccion || '');
+        this.cargando = false;
+      },
+      error: () => {
+        // Si falla, usar los datos locales como respaldo
+        const nombre = localStorage.getItem('nameUser') || '';
+        const [nombreUsuario, apellidoUsuario] = nombre.split(' ');
+        const email = localStorage.getItem('emailUser') || 'usuario@ejemplo.com';
+        const direccion = localStorage.getItem('direccion') || '';
+        const telefono = localStorage.getItem('telefono') || '123456789';
+        this.perfilForm.patchValue({
+          nombre: nombreUsuario,
+          apellido: apellidoUsuario || '',
+          email: email,
+          telefono: telefono,
+          direccion: direccion
+        });
+        this.cargando = false;
+      }
     });
     const fecha = localStorage.getItem('fechaActualizacion');
     if (fecha) {
@@ -198,5 +224,35 @@ export class PerfilComponent implements OnInit {
         }
       });
     }
+  }
+
+  refrescarPerfil(): void {
+    this.refrescando = true;
+    this.authService.getUserProfileMe().subscribe({
+      next: (user) => {
+        this.usuario = user;
+        this.perfilForm.patchValue({
+          nombre: user.nombre || '',
+          apellido: user.apellido || '',
+          email: user.email || '',
+          telefono: user.telefono || '',
+          direccion: user.direccion || ''
+        });
+        if (user.imagen_perfil_url) {
+          this.imagenPerfil = user.imagen_perfil_url;
+          localStorage.setItem('imagenPerfil', user.imagen_perfil_url);
+        }
+        localStorage.setItem('nameUser', `${user.nombre} ${user.apellido}`);
+        localStorage.setItem('emailUser', user.email || '');
+        localStorage.setItem('telefono', user.telefono || '');
+        localStorage.setItem('direccion', user.direccion || '');
+        this.refrescando = false;
+        this.toastr.success('Perfil actualizado');
+      },
+      error: () => {
+        this.toastr.error('No se pudo refrescar el perfil');
+        this.refrescando = false;
+      }
+    });
   }
 }

@@ -85,19 +85,27 @@ export class DashboardComponent implements OnInit{
   //filtro los pedidos
   setActiveTab(tab: string): void {
     this.activeTab = tab;
+    let pedidos: IPedido[] = [];
     switch (tab) {
       case 'Pendientes':
-        this.pedidosFiltrados = this.pedidosData.pendientes || [];
+        pedidos = this.pedidosData.pendientes || [];
         break;
       case 'Aprobados':
-        this.pedidosFiltrados = this.pedidosData.aprobados || [];
+        pedidos = this.pedidosData.aprobados || [];
         break;
       case 'Entregados':
-        this.pedidosFiltrados = this.pedidosData.entregados || [];
+        pedidos = this.pedidosData.entregados || [];
         break;
       default:
-        this.pedidosFiltrados = [];
+        pedidos = [];
     }
+    // Ordenar siempre por fecha_pedido descendente (más nuevos primero)
+    this.pedidosFiltrados = pedidos.slice().sort((a: IPedido, b: IPedido) => {
+      // Si hay hora_pedido, concatenar para mayor precisión
+      const fechaA = a.fecha_pedido ? new Date(a.fecha_pedido).getTime() : 0;
+      const fechaB = b.fecha_pedido ? new Date(b.fecha_pedido).getTime() : 0;
+      return fechaB - fechaA;
+    });
   }
 
   cancelarPedido(pedido: IPedido): void {

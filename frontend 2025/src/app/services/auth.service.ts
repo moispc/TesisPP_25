@@ -126,6 +126,11 @@ export class AuthService {
     return this.http.get<any>(`${this.apiUrl}user/${userId}/`);
   }
 
+  // Nuevo método para obtener el perfil actualizado del usuario autenticado
+  getUserProfileMe(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}me/`);
+  }
+
   // Método para actualizar la URL de la imagen de perfil manualmente (opcional)
   setImagenPerfilUrl(url: string | null) {
     if (url) {
