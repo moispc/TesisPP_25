@@ -8,6 +8,6 @@ urlpatterns = [
     path('update/', views.UpdateProfileView.as_view(), name='update-profile'),
     path('update-image/', views.UpdateProfileImageView.as_view(), name='update-profile-image'),
     path('delete/', views.DeleteProfileView.as_view(), name='delete-profile'),
+    path('me/', views.PerfilUsuarioView.as_view(), name='perfil-usuario'),  # Nuevo endpoint para perfil
 ]
 
- 
