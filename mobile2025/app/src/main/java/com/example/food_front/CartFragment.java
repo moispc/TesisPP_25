@@ -286,8 +286,8 @@ public class CartFragment extends Fragment {
     }    private void rediretToCheckout() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Redirigir directamente a PaymentFragment (como estaba antes)
-        fragmentTransaction.replace(R.id.fragment_container_view, new PaymentFragment());
+        // Ahora redirige primero a DatosEntregaFragment
+        fragmentTransaction.replace(R.id.fragment_container_view, new DatosEntregaFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         }    private void rediretToEmptyCart() {

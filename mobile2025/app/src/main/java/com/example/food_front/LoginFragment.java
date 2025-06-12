@@ -109,13 +109,15 @@ public class LoginFragment extends Fragment {
                             String email = response.getString("email");
                             String phone = response.getString("telefono");
                             String profileImageUrl = response.optString("imagen_perfil_url", "");
+                            String address = response.optString("direccion", ""); // <-- Nuevo campo
 
-                            // Agregar log para ver la URL que viene del backend
+                            // Agregar log para ver la URL y dirección que viene del backend
                             Log.d("ImagenPerfil", "URL recibida del backend: " + profileImageUrl);
+                            Log.d("LoginFragment", "Dirección recibida del backend: " + address);
                             Log.d("LoginFragment", "Email guardado en SessionManager: " + email);
                             sessionManager.saveToken(token);  // Guardar el token para futuras solicitudes
                             sessionManager.saveEmail(email);  // Guardar el email para futuras solicitudes
-                            profileManager.saveInfo(name, surname, email, phone, profileImageUrl);  // Guardar info incluyendo imagen
+                            profileManager.saveInfo(name, surname, email, phone, profileImageUrl, address);  // Guardar info incluyendo imagen y dirección
 
                             // Solo guardar la URL y reemplazar el fragmento
                             Toast.makeText(getContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();

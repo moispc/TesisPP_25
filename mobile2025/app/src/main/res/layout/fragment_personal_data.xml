@@ -121,6 +121,18 @@
                 android:backgroundTint="@color/bottom_nav_dark_selected"
                 android:text="Editar Datos"
                 android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_refresh_personal_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/bottom_nav_dark_selected"
+                android:text="Refrescar"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:contentDescription="Actualizar datos" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

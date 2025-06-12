@@ -37,7 +37,7 @@ public class PersonalDataFragment extends Fragment {
 
     private TextView tvNombre, tvApellido, tvEmail, tvTelefono, tvDireccion;
     private EditText etNombre, etApellido, etEmail, etTelefono, etDireccion;
-    private Button btnEdit, btnSave, btnCancel;
+    private Button btnEdit, btnSave, btnCancel, btnRefreshPersonalData;
     private CardView viewModeCard, editModeCard;
 
     private ProfileManager profileManager;
@@ -70,6 +70,7 @@ public class PersonalDataFragment extends Fragment {
         tvTelefono = view.findViewById(R.id.tv_telefono);
         tvDireccion = view.findViewById(R.id.tv_direccion);
         btnEdit = view.findViewById(R.id.btn_edit);
+        btnRefreshPersonalData = view.findViewById(R.id.btn_refresh_personal_data);
 
         // Inicializar las vistas - Modo edición
         editModeCard = view.findViewById(R.id.edit_mode_card);
@@ -92,6 +93,9 @@ public class PersonalDataFragment extends Fragment {
 
         // Configurar el botón de cancelar
         btnCancel.setOnClickListener(v -> switchToViewMode());
+
+        // Configurar el botón de actualización de datos personales
+        btnRefreshPersonalData.setOnClickListener(v -> refreshUserDataFromBackend());
 
         return view;
     }
@@ -289,6 +293,46 @@ public class PersonalDataFragment extends Fragment {
 
         // Añadir solicitud a la cola
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void refreshUserDataFromBackend() {
+        ProgressDialog progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setMessage("Actualizando datos...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        String url = "https://backmobile1.onrender.com/appUSERS/me/";
+        String token = sessionManager.getToken();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+            response -> {
+                progressDialog.dismiss();
+                try {
+                    String nombre = response.optString("nombre", "");
+                    String apellido = response.optString("apellido", "");
+                    String email = response.optString("email", "");
+                    String telefono = response.optString("telefono", "");
+                    String direccion = response.optString("direccion", "");
+                    String profileImageUrl = response.optString("imagen_perfil_url", profileManager.getProfileImageUrl());
+                    profileManager.saveInfo(nombre, apellido, email, telefono, profileImageUrl, direccion);
+                    displayPersonalData();
+                    Toast.makeText(requireContext(), "Datos actualizados", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(requireContext(), "Error al actualizar datos", Toast.LENGTH_SHORT).show();
+                }
+            },
+            error -> {
+                progressDialog.dismiss();
+                Toast.makeText(requireContext(), "Error al conectar con el servidor", Toast.LENGTH_SHORT).show();
+            }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        requestQueue.add(request);
     }
 
     private void handleSuccessfulUpdate(String nombre, String apellido, String email, String telefono, String direccion) {

@@ -209,15 +209,9 @@ public class PaymentFragment extends Fragment implements ConnectionMonitor.Conne
             public void onClick(View v) {
                 if (radioButtonMercadoPago.isChecked()) {
                     procesarPagoConMercadoPago();
-                } else if (radioButtonCreditCard.isChecked()) {
-                    Toast.makeText(requireContext(), "Pago con tarjeta no implementado aún", Toast.LENGTH_SHORT).show();
-                } else if (radioButtonPaypal.isChecked()) {
-                    // Simular pago exitoso con PayPal: ir directo a SuccessFragment
-                    requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container_view, new SuccessFragment())
-                        .addToBackStack(null)
-                        .commit();
+                } else if (radioButtonCreditCard.isChecked() || radioButtonPaypal.isChecked()) {
+                    // Confirmar pedido en backend para PayPal y tarjeta
+                    confirmarPedidoBackend();
                 } else {
                     Toast.makeText(requireContext(), "Por favor selecciona un método de pago", Toast.LENGTH_SHORT).show();
                 }
@@ -621,5 +615,64 @@ public class PaymentFragment extends Fragment implements ConnectionMonitor.Conne
                 }
             });
         }
+    }
+    
+    /**
+     * Llama al endpoint de confirmación de pedido del backend tras pago con PayPal o tarjeta
+     */
+    private void confirmarPedidoBackend() {
+        showLoading(true);
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            showErrorView(true, "No hay conexión a Internet. Por favor, verifica tu conexión e intenta nuevamente.");
+            return;
+        }
+        String url = "https://backmobile1.onrender.com/appCART/confirmar/";
+        String token = sessionManager.getToken();
+        Log.d("PaymentFragment", "Token enviado en confirmarPedidoBackend: " + token);
+        if (token == null || token.isEmpty()) {
+            showLoading(false);
+            showErrorView(true, "Debes iniciar sesión para confirmar el pedido.");
+            return;
+        }
+        com.android.volley.RequestQueue queue = com.android.volley.toolbox.Volley.newRequestQueue(requireContext());
+        com.android.volley.toolbox.JsonObjectRequest request = new com.android.volley.toolbox.JsonObjectRequest(
+                com.android.volley.Request.Method.POST, url, null,
+                new com.android.volley.Response.Listener<org.json.JSONObject>() {
+                    @Override
+                    public void onResponse(org.json.JSONObject response) {
+                        showLoading(false);
+                        new android.app.AlertDialog.Builder(requireContext())
+                                .setTitle("Pedido confirmado")
+                                .setMessage("Tu pedido ha sido confirmado y el carrito se ha vaciado. ¡Gracias por tu compra!")
+                                .setPositiveButton("Continuar", new android.content.DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(android.content.DialogInterface dialog, int which) {
+                                        navigateToSuccessFragment();
+                                    }
+                                })
+                                .setCancelable(false)
+                                .show();
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError error) {
+                        showLoading(false);
+                        String msg = "Error al confirmar el pedido";
+                        if (error.networkResponse != null) {
+                            msg += " (código: " + error.networkResponse.statusCode + ")";
+                        }
+                        showErrorView(true, msg);
+                    }
+                }) {
+            @Override
+            public java.util.Map<String, String> getHeaders() {
+                java.util.Map<String, String> headers = new java.util.HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                Log.d("PaymentFragment", "Header Authorization enviado: Bearer " + token);
+                return headers;
+            }
+        };
+        queue.add(request);
     }
 }
