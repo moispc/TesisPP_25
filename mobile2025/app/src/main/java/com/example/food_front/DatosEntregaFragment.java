@@ -71,8 +71,87 @@ public class DatosEntregaFragment extends Fragment {
      * Makes a POST request
      */
     private void hacerPedido() {
-        // Ir directamente a la pantalla de métodos de pago
-        replaceFragment(new PaymentFragment());
+        EditText editTextDireccion = getView().findViewById(R.id.editTextDireccionEntrega);
+        String nuevaDireccion = editTextDireccion.getText().toString().trim();
+        ProfileManager profileManager = new ProfileManager(requireContext());
+        String direccionGuardada = profileManager.getAddress();
+
+        if (nuevaDireccion.isEmpty()) {
+            Toast.makeText(requireContext(), "Por favor ingresa una dirección de entrega", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!nuevaDireccion.equals(direccionGuardada)) {
+            // Consumir endpoint para actualizar dirección de perfil
+            actualizarDireccionPerfil(nuevaDireccion);
+        } else {
+            // Si no cambió, continuar flujo normal
+            replaceFragment(new PaymentFragment());
+        }
+    }
+
+    private void actualizarDireccionPerfil(String nuevaDireccion) {
+        String url = "https://backmobile1.onrender.com/appUSERS/update/";
+        SessionManager sessionManager = new SessionManager(requireContext());
+        String token = sessionManager.getToken();
+        if (token == null) {
+            Toast.makeText(requireContext(), "No hay sesión activa", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Mostrar progreso
+        android.app.ProgressDialog progressDialog = new android.app.ProgressDialog(requireContext());
+        progressDialog.setMessage("Actualizando dirección...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        org.json.JSONObject body = new org.json.JSONObject();
+        try {
+            body.put("direccion", nuevaDireccion);
+        } catch (org.json.JSONException e) {
+            progressDialog.dismiss();
+            Toast.makeText(requireContext(), "Error al preparar los datos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        com.android.volley.toolbox.JsonObjectRequest request = new com.android.volley.toolbox.JsonObjectRequest(
+                com.android.volley.Request.Method.PUT,
+                url,
+                body,
+                response -> {
+                    progressDialog.dismiss();
+                    // Guardar localmente la nueva dirección usando saveInfo con los datos actuales
+                    ProfileManager profileManager = new ProfileManager(requireContext());
+                    String nombre = profileManager.getName();
+                    String apellido = profileManager.getSurname();
+                    String email = profileManager.getEmail();
+                    String telefono = profileManager.getPhone();
+                    String imagen = profileManager.getProfileImageUrl();
+                    profileManager.saveInfo(nombre, apellido, email, telefono, imagen, nuevaDireccion);
+                    Toast.makeText(requireContext(), "Dirección actualizada", Toast.LENGTH_SHORT).show();
+                    // Continuar con el flujo normal
+                    replaceFragment(new PaymentFragment());
+                },
+                error -> {
+                    progressDialog.dismiss();
+                    String msg = "Error al actualizar dirección";
+                    if (error.networkResponse != null) {
+                        msg += ". Código: " + error.networkResponse.statusCode;
+                        try {
+                            String bodyStr = new String(error.networkResponse.data, "UTF-8");
+                            msg += "\n" + bodyStr;
+                        } catch (Exception ignored) {}
+                    }
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show();
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws com.android.volley.AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        com.android.volley.RequestQueue queue = com.android.volley.toolbox.Volley.newRequestQueue(requireContext());
+        queue.add(request);
     }
 
     private void replaceFragment(Fragment newFragment) {

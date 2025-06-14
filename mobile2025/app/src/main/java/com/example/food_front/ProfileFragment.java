@@ -133,24 +133,39 @@ public class ProfileFragment extends Fragment {
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
+                        Log.d("DASHBOARD", "Respuesta cruda: " + response.toString());
                         if (response.has("results")) {
                             org.json.JSONArray pedidos = response.getJSONArray("results");
+                            Log.d("DASHBOARD", "Pedidos recibidos: " + pedidos.length());
                             if (pedidos.length() == 0) {
-                                // No hay pedidos, mostrar mensaje simple
                                 mostrarMensajeNoPedidos();
                             } else {
-                                // Hay pedidos, mostrar diálogo con opciones de edición
                                 mostrarDialogoConPedidos(pedidos);
                             }
                         } else {
+                            Log.e("DASHBOARD", "No hay campo 'results' en la respuesta: " + response.toString());
                             mostrarMensajeSinResultados(response);
                         }
                     } catch (Exception e) {
+                        Log.e("DASHBOARD", "Error parseando respuesta: " + Log.getStackTraceString(e));
                         mostrarMensajeError(e, response);
                     }
                 },
                 error -> {
-                    Toast.makeText(requireContext(), "Error al obtener pedidos", Toast.LENGTH_SHORT).show();
+                    String msg = "Error al obtener pedidos";
+                    if (error.networkResponse != null) {
+                        msg += ". Código: " + error.networkResponse.statusCode;
+                        try {
+                            String body = new String(error.networkResponse.data, "UTF-8");
+                            Log.e("DASHBOARD", "Respuesta error: " + body);
+                            msg += "\n" + body;
+                        } catch (Exception ex) {
+                            Log.e("DASHBOARD", "Error leyendo body de error", ex);
+                        }
+                    } else {
+                        Log.e("DASHBOARD", "Volley error sin networkResponse", error);
+                    }
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show();
                 }
             ) {
                 @Override
@@ -164,6 +179,12 @@ public class ProfileFragment extends Fragment {
                 }
             };
             queue.add(request);
+            // Aumentar el timeout solo para esta petición
+            request.setRetryPolicy(new com.android.volley.DefaultRetryPolicy(
+                60000, // 60 segundos de timeout
+                1,     // 1 reintento
+                1.5f   // backoff multiplier
+            ));
         });
 
         // Encontrar el TextView de "Información legal"
