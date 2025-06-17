@@ -8,6 +8,8 @@ Backend deployado-> Python + Django: https://backmobile1.onrender.com/
 
 Microservicio Mercadopago -> Python + Django: https://backmp.onrender.com/
 
+Microservicio 2FA -> Python + Django: https://back2fa.onrender.com/
+
 
 ### Moispc - 2025 - Plataforma Web y Mobile para Ventas de Comidas Rápidas.
 ### Descripción
