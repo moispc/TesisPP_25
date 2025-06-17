@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-your-secret-key-for-development')
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'mp_integration.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'BGVqserZKnEpylRlbhwyQcgSmmoocqAt',
-        'HOST': 'shortline.proxy.rlwy.net',
-        'PORT': '45482',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
         'OPTIONS': {
             'sql_mode': 'traditional',
         }
@@ -116,7 +116,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuración de Mercado Pago
-MERCADOPAGO_ACCESS_TOKEN = os.getenv('MERCADOPAGO_ACCESS_TOKEN', 'APP_USR-1638397842548868-051022-6da127c22d6d3b0e023d8ae29f3618c2-2435347984')
+MERCADOPAGO_ACCESS_TOKEN = ''
 
 # URL del backend principal
 MAIN_BACKEND_URL = os.getenv('MAIN_BACKEND_URL', 'https://backmobile1.onrender.com')

@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-qhu0i@1blx*kwq=!o#grkdq^_5k1gce3(8(y46twjd40_vcj$$')
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') != 'False'
@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'back2fa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'BGVqserZKnEpylRlbhwyQcgSmmoocqAt',
-        'HOST': 'shortline.proxy.rlwy.net',
-        'PORT': '45482',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
         'OPTIONS': {
             'sql_mode': 'traditional',
         }

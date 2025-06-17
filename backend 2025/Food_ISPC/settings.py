@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lq50bruj9vl$-l1#drn=*iof2z%f%nl!j05(ce#*s$e2xhixc='
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -134,17 +134,14 @@ WSGI_APPLICATION = 'Food_ISPC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'BGVqserZKnEpylRlbhwyQcgSmmoocqAt',
-        'HOST': 'shortline.proxy.rlwy.net',
-        'PORT': '45482',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
         'OPTIONS': {
             'sql_mode': 'traditional',
-            }
-
-
-
+        }
     }
 }
 
@@ -208,7 +205,7 @@ SIMPLE_JWT = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "djp80kwaj",  # Reemplaza por tu cloud name real
-    'API_KEY': "285359299675698",             # Reemplaza por tu API key real
-    'API_SECRET': "CILwUfSuiDsJ977SrrCvPQcgJz4",       # Reemplaza por tu API secret real
+    'CLOUD_NAME': '',
+    'API_KEY': '',
+    'API_SECRET': '',
 }
