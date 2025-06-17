@@ -22,6 +22,124 @@
   margin-right: 8px;
 }
 
+/* Estilos para el modal 2FA */
+.modal-2fa.show {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-2fa .modal-content {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.qr-image {
+  max-width: 220px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.qr-image:hover {
+  transform: scale(1.05);
+}
+
+.qr-image.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.qr-badge {
+  position: absolute;
+  top: -8px;
+  right: calc(50% - 115px);
+  background-color: #0d6efd;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.modal-header.bg-primary-subtle {
+  background: linear-gradient(145deg, #0d6efd20, #0d6efd10);
+  border-bottom: 1px solid rgba(13, 110, 253, 0.2);
+}
+
+.modal-title.text-primary {
+  font-weight: 600;
+}
+
+.btn-confirm-2fa {
+  background: linear-gradient(145deg, #0d6efd, #0b5ed7);
+  border: none;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm-2fa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+}
+
+.code-input {
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.security-reasons {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #0d6efd;
+  margin-bottom: 20px;
+}
+
+.security-icon {
+  color: #0d6efd;
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+
 /* Estilos para dispositivos móviles */
 @media (max-width: 576px) {
   .card-container {
@@ -39,6 +157,14 @@
   
   .form-check img {
     margin-top: 10px;
+  }
+  
+  .qr-image {
+    max-width: 180px;
+  }
+  
+  .qr-badge {
+    right: calc(50% - 95px);
   }
 }
 

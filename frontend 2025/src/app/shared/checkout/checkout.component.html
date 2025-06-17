@@ -108,3 +108,68 @@
     </div>
   </div>
 </div>
+
+<!-- Modal 2FA -->
+<div class="modal fade modal-2fa" [class.show]="show2FAModal" [ngStyle]="{display: show2FAModal ? 'block' : 'none'}" tabindex="-1" aria-labelledby="modal2FALabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header bg-primary-subtle rounded-top-4">
+        <h5 class="modal-title text-primary" id="modal2FALabel">
+          <i class="bi bi-shield-lock-fill security-icon"></i> 
+          Autenticación en Dos Pasos
+        </h5>
+        <button type="button" class="btn-close" (click)="show2FAModal = false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="security-reasons">
+          <p class="mb-1"><strong>Verificación adicional requerida</strong></p>
+          <p class="mb-0">Por motivos de seguridad, esta transacción necesita una verificación adicional mediante autenticación de dos factores (2FA).</p>
+          <div *ngIf="twofaMotivo.length" class="mt-2">
+            <small class="text-muted"><strong>Motivo:</strong> 
+              <span *ngFor="let motivo of twofaMotivo; let i = last">
+                <span *ngIf="motivo === 'monto'">monto elevado</span>
+                <span *ngIf="motivo === 'titular'">verificación de titular</span>
+                <span *ngIf="!i">, </span>
+              </span>
+            </small>
+          </div>
+        </div>
+          <div *ngIf="twofaQR" class="qr-container">
+          <div class="qr-badge">Escanear QR</div>
+          <img [src]="twofaQR" alt="QR 2FA" class="qr-image" (load)="onQRLoad()" [ngClass]="{'fade-in': qrLoaded}">
+          <p class="text-center mt-2">
+            <small class="text-muted">Escanea este código QR con la aplicación Google Authenticator</small>
+          </p>
+          <div class="mt-2 text-center">
+            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank" class="btn btn-sm btn-outline-secondary me-2">
+              <i class="bi bi-android"></i> Android
+            </a>
+            <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-apple"></i> iPhone
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="code2fa" class="form-label">
+            <i class="bi bi-123"></i> Ingresa el código de verificación:
+          </label>
+          <input type="text" maxlength="6" class="form-control my-2 code-input" [(ngModel)]="twofaCode" id="code2fa" placeholder="000000" autocomplete="one-time-code">
+          <small class="text-muted d-block mt-2">El código cambia cada 30 segundos en la aplicación.</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" [disabled]="verifying2FA" (click)="show2FAModal = false">
+          <i class="bi bi-x"></i> Cancelar
+        </button>
+        <button type="button" class="btn btn-primary fw-bold btn-confirm-2fa" [disabled]="verifying2FA || !twofaCode" (click)="confirmar2FA()">
+          <div *ngIf="verifying2FA" class="spinner-border spinner-border-sm me-2" role="status">
+            <span class="visually-hidden">Verificando...</span>
+          </div>
+          <i *ngIf="!verifying2FA" class="bi bi-check2-circle"></i> 
+          {{ verifying2FA ? 'Verificando...' : 'Verificar Código' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

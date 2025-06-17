@@ -37,7 +37,7 @@ import com.example.food_front.utils.ConnectionMonitor;
 public class PaymentFragment extends Fragment implements ConnectionMonitor.ConnectivityListener {
 
     private RadioGroup radioGroupPaymentMethod;
-    private RadioButton radioButtonMercadoPago, radioButtonCreditCard;
+    private RadioButton radioButtonMercadoPago, radioButtonCreditCard, radioButtonPaypal;
     private Button buttonPayNow, buttonRetry;
     private ProgressBar progressBar;
     private WebView webViewPayment;
@@ -80,9 +80,10 @@ public class PaymentFragment extends Fragment implements ConnectionMonitor.Conne
         connectionMonitor = new ConnectionMonitor(requireContext(), this);
 
         // Inicializar vistas
+        radioGroupPaymentMethod = view.findViewById(R.id.radioGroupPaymentMethod);
         radioButtonCreditCard = view.findViewById(R.id.radioButton4);
         radioButtonMercadoPago = view.findViewById(R.id.radioButton6);
-        RadioButton radioButtonPaypal = view.findViewById(R.id.radioButtonPaypal);
+        radioButtonPaypal = view.findViewById(R.id.radioButtonPaypal);
         buttonPayNow = view.findViewById(R.id.button2);
         buttonRetry = view.findViewById(R.id.buttonRetry);
         progressBar = view.findViewById(R.id.progressBarPayment);
@@ -487,7 +488,52 @@ public class PaymentFragment extends Fragment implements ConnectionMonitor.Conne
     }
     
     private void navigateToSuccessFragment() {
-        SuccessFragment successFragment = new SuccessFragment();
+        // Determinar el método de pago seleccionado
+        String selectedPaymentMethod = "Efectivo"; // Valor por defecto
+
+        if (radioGroupPaymentMethod != null) {
+            int selectedId = radioGroupPaymentMethod.getCheckedRadioButtonId();
+            Log.d(TAG, "ID del radio button seleccionado: " + selectedId);
+
+            // Verificar si el RadioButton seleccionado es MercadoPago
+            if (selectedId == R.id.radioButton6) {
+                selectedPaymentMethod = "mercadopago";
+                Log.d(TAG, "Método de pago seleccionado: MercadoPago");
+            }
+            // Verificar si el RadioButton seleccionado es PayPal
+            else if (selectedId == R.id.radioButtonPaypal) {
+                selectedPaymentMethod = "paypal";
+                Log.d(TAG, "Método de pago seleccionado: PayPal");
+            }
+            // Verificar si el RadioButton seleccionado es Tarjeta de crédito
+            else if (selectedId == R.id.radioButton4) {
+                selectedPaymentMethod = "credit_card";
+                Log.d(TAG, "Método de pago seleccionado: Tarjeta de crédito");
+            } else {
+                Log.d(TAG, "No se detectó ningún método de pago específico, usando el valor por defecto: " + selectedPaymentMethod);
+            }
+        } else {
+            Log.e(TAG, "radioGroupPaymentMethod es nulo");
+        }
+
+        // Para confirmar el método de pago en otra parte del proceso
+        if (buttonPayNow != null && buttonPayNow.isEnabled()) {
+            if (radioButtonMercadoPago != null && radioButtonMercadoPago.isChecked()) {
+                selectedPaymentMethod = "mercadopago";
+                Log.d(TAG, "Método de pago confirmado por estado de RadioButton: MercadoPago");
+            } else if (radioButtonPaypal != null && radioButtonPaypal.isChecked()) {
+                selectedPaymentMethod = "paypal";
+                Log.d(TAG, "Método de pago confirmado por estado de RadioButton: PayPal");
+            } else if (radioButtonCreditCard != null && radioButtonCreditCard.isChecked()) {
+                selectedPaymentMethod = "credit_card";
+                Log.d(TAG, "Método de pago confirmado por estado de RadioButton: Tarjeta de crédito");
+            }
+        }
+
+        // Crear instancia del fragmento de éxito con el método de pago
+        SuccessFragment successFragment = SuccessFragment.newInstance(currentPaymentRequestId, selectedPaymentMethod);
+        Log.d(TAG, "Navegando al fragmento de éxito con método de pago: " + selectedPaymentMethod);
+
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         // Añadir animación a la transición

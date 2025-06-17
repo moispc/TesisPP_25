@@ -93,7 +93,22 @@ public class SuccessFragment extends Fragment {
         ticketLayout.addView(tvNro);
         // Método de pago
         android.widget.TextView tvPago = new android.widget.TextView(requireContext());
-        String metodo = paymentMethod != null ? paymentMethod : "-";
+        String metodo;
+        if (paymentMethod != null) {
+            String paymentMethodLower = paymentMethod.toLowerCase();
+            if (paymentMethodLower.contains("mercado") || paymentMethodLower.equals("mercadopago")) {
+                metodo = "Mercado Pago";
+            } else if (paymentMethodLower.contains("paypal") || paymentMethodLower.equals("pay pal")) {
+                metodo = "PayPal";
+            } else if (paymentMethodLower.contains("credit") || paymentMethodLower.contains("tarjeta") ||
+                       paymentMethodLower.contains("card")) {
+                metodo = "Tarjeta de crédito";
+            } else {
+                metodo = paymentMethod; // Usar el valor original si no coincide con ninguno de los casos anteriores
+            }
+        } else {
+            metodo = "Efectivo"; // Valor por defecto si no se especifica método de pago
+        }
         tvPago.setText("Pago: " + metodo);
         tvPago.setTextColor(android.graphics.Color.DKGRAY);
         ticketLayout.addView(tvPago);

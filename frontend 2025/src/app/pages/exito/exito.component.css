@@ -1,1 +1,449 @@
 /* Eliminado el estilo del contador porque ya no se usa */
+
+.page-container {
+  padding: 1rem;
+}
+
+.receipt-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: none;
+}
+
+.receipt-header {
+  background: linear-gradient(145deg, #28a745, #218838);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+}
+
+.receipt-logo {
+  height: 40px;
+  width: auto;
+  margin-right: 1rem;
+}
+
+.receipt-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.receipt-type {
+  text-align: right;
+}
+
+.receipt-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 0.3rem 0.8rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.receipt-number {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.client-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.client-address, .client-email {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.receipt-date {
+  background-color: #f8f9fa;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  display: inline-block;
+}
+
+.date-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.date-value {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.payment-info {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+}
+
+.payment-logo {
+  height: 32px;
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+.method-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-approved {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+}
+
+.status-pending {
+  background-color: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+}
+
+.status-rejected {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #dc3545;
+}
+
+.payment-details {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.items-table-container {
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.items-table {
+  margin-bottom: 0;
+}
+
+.items-table thead {
+  background-color: #f8f9fa;
+}
+
+.items-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: #666;
+  padding: 0.8rem;
+}
+
+.items-table td {
+  vertical-align: middle;
+  padding: 0.8rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.item-qty {
+  width: 10%;
+  text-align: center;
+}
+
+.item-desc {
+  width: 50%;
+}
+
+.item-price, .item-total {
+  width: 20%;
+  text-align: right;
+}
+
+.items-table tfoot tr td {
+  padding: 0.6rem 0.8rem;
+  border: none;
+}
+
+.subtotal-row td, .discount-row td {
+  color: #666;
+}
+
+.total-row td {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.grand-total {
+  color: #28a745;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.discount-value {
+  color: #dc3545;
+  text-align: right;
+}
+
+.total-value, .grand-total {
+  text-align: right;
+}
+
+.merchant-info {
+  border-top: 1px dashed #e0e0e0;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.company-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.company-address, .company-contact {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.2rem;
+}
+
+.qr-container {
+  display: inline-block;
+}
+
+.receipt-qr {
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+
+.qr-label {
+  font-size: 0.75rem;
+  color: #666;
+  display: block;
+  text-align: center;
+}
+
+.thank-you-message {
+  text-align: center;
+  padding: 1.5rem 0;
+  font-weight: 600;
+  color: #28a745;
+  font-size: 1.1rem;
+}
+
+.receipt-footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  font-size: 0.85rem;
+  color: #666;
+  border-top: 1px solid #e0e0e0;
+}
+
+.action-buttons {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Mejoramos los estilos de los botones para mayor visibilidad */
+.action-buttons .btn {
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  margin: 0 10px;
+  transition: all 0.3s ease;
+}
+
+.action-buttons .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.action-buttons .btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.action-buttons .btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.action-buttons .btn i {
+  margin-right: 5px;
+}
+
+.watermark {
+  opacity: 0.5;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* Estilos para tarjeta de crédito */
+.card-info {
+  background: linear-gradient(145deg, #394046, #2a2e33);
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-chip-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-brand-icons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.card-brand-icon {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+.card-details {
+  margin-top: 10px;
+}
+
+.card-number {
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.card-expiry {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+/* Estilos para PayPal */
+.paypal-container {
+  background-color: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.paypal-logo {
+  height: 48px;
+  width: auto;
+}
+
+.paypal-email {
+  font-weight: 600;
+  color: #333;
+}
+
+.paypal-protection {
+  font-size: 0.8rem;
+  color: #2c7ceb;
+}
+
+/* Actualización de estilos para impresión */
+@media print {
+  body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .page-container {
+    padding: 0;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .receipt-card {
+    box-shadow: none;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .card-body.p-4.p-print-5 {
+    padding: 20mm !important;
+  }
+  
+  .receipt-header {
+    padding: 10mm 20mm;
+  }
+  
+  .receipt-footer {
+    padding: 5mm 20mm;
+  }
+  
+  .receipt-logo, .payment-logo {
+    filter: grayscale(100%);
+  }
+    .receipt-header {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .payment-info, .items-table-container {
+    page-break-inside: avoid;
+  }
+  
+  .thank-you-message {
+    margin-top: 10mm;
+  }
+  
+  .card-info {
+    background: #eee !important;
+    color: #333 !important;
+    border: 1px solid #ccc;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .card-brand-icon, .paypal-logo {
+    filter: grayscale(100%);
+  }
+  
+  .paypal-container {
+    border: 1px solid #ccc;
+  }
+  
+  @page {
+    margin: 0;
+    size: auto;
+  }
+}

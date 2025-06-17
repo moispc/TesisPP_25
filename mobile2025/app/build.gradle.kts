@@ -58,6 +58,9 @@ dependencies {
     // WebView para implementar nuestra propia integración con MercadoPago
     implementation("androidx.webkit:webkit:1.6.1")
 
+    // Biblioteca de autenticación biométrica
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

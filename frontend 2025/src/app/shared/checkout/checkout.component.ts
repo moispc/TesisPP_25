@@ -8,6 +8,7 @@ import { MercadoPagoService } from '../../services/mercado-pago.service';
 import { Pedido } from '../../model/pedido.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { TwofaService } from '../../services/twofa.service';
 
 @Component({
   selector: 'app-checkout',
@@ -27,17 +28,36 @@ export class CheckoutComponent implements OnInit {
   pedido: Pedido = new Pedido(0, 0, '', '', '', []);
   mercadoPagoIcon: string = 'https://contactopuro.com/files/mercadopago-81090.png';
   
+  // Propiedades mejoradas para 2FA
+  show2FAModal: boolean = false;
+  twofaQR: string = '';
+  twofaMotivo: string[] = [];
+  twofaEnabled: boolean = false;
+  twofaCode: string = '';
+  verifying2FA: boolean = false;
+  qrLoaded: boolean = false;
+  
+  emailUser: string = '';
+  nameUser: string = '';
+
   constructor(
     private router: Router,
     private pedidoService: PedidosService,
     private toastr: ToastrService,
     private http: HttpClient,
     private mercadoPagoService: MercadoPagoService,
-    public contactoService: ContactoService
+    public contactoService: ContactoService,
+    private twofaService: TwofaService
   ) {}
 
   ngOnInit(): void {
     this.pedido = this.pedidoService.getPedido();
+    this.emailUser = localStorage.getItem('emailUser') || '';
+    this.nameUser = localStorage.getItem('nameUser') || '';
+    console.log('Email de usuario:', this.emailUser);
+    console.log('Nombre de usuario:', this.nameUser);
+    console.log('Total del pedido:', this.pedido.total);
+    this.verificar2FA();
     // Inicialización del SDK de Mercado Pago usando el modelo oficial y evitando error de TypeScript
     if ((window as any).MercadoPago) {
       const mp = new (window as any).MercadoPago('APP_USR-15dcbbb0-ed10-4a65-a8ec-4279e83029a4', { locale: 'es-AR' });
@@ -45,13 +65,95 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  verificar2FA() {
+    // Si ya está activo en sesión, no volver a pedir
+    if (sessionStorage.getItem('2fa_active') === 'true') {
+      console.log('2FA ya activo en sesión');
+      return;
+    }
+    const monto = this.pedido.total;
+    console.log('Verificando 2FA para monto:', monto);
+    // Solo considerar el monto para 2FA
+    if (monto > 50000) {
+      console.log('Monto supera 50000, llamando a servicio 2FA');
+      this.twofaService.authorizePurchase(this.emailUser, monto, this.nameUser).subscribe({
+        next: (resp) => {
+          console.log('Respuesta authorizePurchase:', resp);
+          if (resp.requiere_2fa) {
+            this.twofaMotivo = resp.motivo;
+            this.twofaEnabled = false;
+            console.log('Requiere 2FA, motivos:', this.twofaMotivo);
+            this.twofaService.setup2fa(this.emailUser).subscribe({
+              next: (qrResp) => {
+                console.log('QR recibido:', qrResp);
+                this.twofaQR = qrResp.qr;
+                this.show2FAModal = true;
+              },
+              error: (err) => {
+                console.error('Error al obtener QR:', err);
+                this.toastr.error('Error al configurar 2FA. Por favor, intenta de nuevo.');
+              }
+            });
+          } else {
+            this.twofaEnabled = true;
+            sessionStorage.setItem('2fa_active', 'true');
+            console.log('2FA no requerido o ya está configurado');
+          }
+        },
+        error: (err) => {
+          console.error('Error en verificar2FA:', err);
+          this.toastr.error('Error al verificar 2FA. Por favor, intenta de nuevo.');
+        }
+      });
+    }
+  }
+  confirmar2FA() {
+    if (!this.twofaCode || this.twofaCode.length !== 6) {
+      this.toastr.warning('Por favor, introduce un código de 6 dígitos');
+      return;
+    }
+    
+    console.log('Enviando código 2FA:', this.twofaCode, 'para email:', this.emailUser);
+    this.verifying2FA = true; // Iniciar animación de verificación
+    
+    this.twofaService.verify2fa(this.emailUser, this.twofaCode).subscribe({
+      next: (resp) => {
+        console.log('Respuesta verify2fa:', resp);
+        if (resp.verified) {
+          this.toastr.success('Verificación completada con éxito', '2FA Correcto');
+          sessionStorage.setItem('2fa_active', 'true');
+          
+          // Cerramos el modal con una pequeña demora para mejor experiencia UX
+          setTimeout(() => {
+            this.show2FAModal = false;
+            this.verifying2FA = false;
+            // Si hay un pago pendiente, continuar con él
+            if (this.paymentMethod === 'mercadopago') {
+              this.procesarPagoMercadoPago();
+            }
+          }, 1000);
+        } else {
+          this.verifying2FA = false; // Detener animación de verificación
+          this.toastr.error('El código introducido no es válido. Inténtalo de nuevo.');
+        }
+      },
+      error: (err) => {
+        this.verifying2FA = false; // Detener animación de verificación en caso de error
+        console.error('Error en confirmar2FA:', err);
+        this.toastr.error('No pudimos verificar tu código. Por favor, inténtalo de nuevo.');
+      }
+    });
+  }
+
   onSubmit(): void {
     if (!this.paymentMethod) {
       this.toastr.warning('Selecciona un método de pago');
       return;
     }
+      this.isProcessing = true;
     
-    this.isProcessing = true;
+    // Guardar el método de pago seleccionado para recuperarlo en la página de éxito
+    sessionStorage.setItem('paymentMethod', this.paymentMethod);
     
     if (this.paymentMethod === 'paypal') {
       setTimeout(() => {
@@ -158,12 +260,16 @@ export class CheckoutComponent implements OnInit {
       this.isProcessing = false;
     });
   }
-
   // Método para confirmar el pedido (para métodos de pago diferentes a Mercado Pago)
   confirmarPedido(): void {
     this.pedidoService.confirmarPedido().subscribe({
       next: () => {
-        this.router.navigate(['/exito']);
+        // Añadir el método de pago como parámetro a la redirección
+        this.router.navigate(['/exito'], {
+          queryParams: {
+            payment_method: this.paymentMethod
+          }
+        });
       },
       error: (error: any) => {
         this.toastr.error('Error al confirmar pedido. Intente nuevamente.');
@@ -177,5 +283,10 @@ export class CheckoutComponent implements OnInit {
     // Resetear el estado si cambia el método de pago
     this.isProcessing = false;
     console.log('Método de pago cambiado a:', this.paymentMethod);
+  }
+
+  // Método para manejar la carga del QR
+  onQRLoad() {
+    this.qrLoaded = true;
   }
 }

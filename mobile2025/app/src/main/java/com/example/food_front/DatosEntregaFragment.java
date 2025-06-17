@@ -27,8 +27,29 @@ import java.util.Map;
 
 public class DatosEntregaFragment extends Fragment {
 
+    private double totalCompra = 0;
+    // Umbral para autenticación biométrica: $50,000
+    private static final double UMBRAL_AUTENTICACION = 50000;
+
     public DatosEntregaFragment() {
         // Required empty constructor
+    }
+
+    // Método estático para crear una nueva instancia con el total de la compra
+    public static DatosEntregaFragment newInstance(double total) {
+        DatosEntregaFragment fragment = new DatosEntregaFragment();
+        Bundle args = new Bundle();
+        args.putDouble("totalCompra", total);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            totalCompra = getArguments().getDouble("totalCompra", 0);
+        }
     }
 
     @Override
@@ -158,7 +179,16 @@ public class DatosEntregaFragment extends Fragment {
         if (isAdded()) {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container_view, newFragment);
+
+            // Si el fragmento de destino es el de pago y el total supera el umbral
+            // redirigimos al fragmento de autenticación por huella
+            if (newFragment instanceof PaymentFragment && totalCompra >= UMBRAL_AUTENTICACION) {
+                FingerprintAuthFragment authFragment = FingerprintAuthFragment.newInstance(totalCompra);
+                fragmentTransaction.replace(R.id.fragment_container_view, authFragment);
+            } else {
+                fragmentTransaction.replace(R.id.fragment_container_view, newFragment);
+            }
+
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: back2fa
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn back2fa.wsgi:application
+    plan: free
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: back2fa.settings
+      - key: PYTHON_VERSION
+        value: 3.10
