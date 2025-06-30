@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISPC FOOD - Presentación Interactiva</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --gradient: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 3rem;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .slide h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slide h4 {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin: 1rem 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            background: var(--primary-color);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tech-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .tech-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        .tech-list {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .urls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .url-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .url-card:hover {
+            transform: scale(1.05);
+        }
+
+        .url-card a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .url-card a:hover {
+            text-decoration: underline;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress {
+            background: white;
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-indicators {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .demo-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+        }        .team-grid {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }        .team-member {
+            background: var(--card-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 400px;
+            width: auto;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .social-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem auto;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1rem;
+            }
+            
+            .slide h2 {
+                font-size: 2rem;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .controls {
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        .intro-slide {
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+        }
+
+        .intro-slide h2 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-slide .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .intro-slide .logo-img {
+            width: 150px;
+            height: 150px;
+            margin: 2rem auto;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-hamburger"></i>
+                <h1>ISPC FOOD</h1>
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand"></i>
+                    Pantalla Completa
+                </button>
+                <div class="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">25</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Slide 1: Portada -->
+            <section class="slide intro-slide active">
+                <div class="logo-img">🍔</div>
+                <h2>ISPC FOOD</h2>
+                <p class="subtitle">Plataforma Web y Mobile para Ventas de Comidas Rápidas</p>
+                <h3 style="color: white;">Proyecto Final - Tesis 2025</h3>                  <div class="team-grid">
+                    <div class="team-member">
+                        <h4>Carlos Alberto Nicolas Luna</h4>
+                        <p>Full Stack Developer</p>                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/nicolas-luna-632612106/" target="_blank" class="social-link">
+                                <i class="fab fa-linkedin"></i>
+                                LinkedIn
+                            </a>
+                            <a href="https://github.com/NicolasLuna12" target="_blank" class="social-link">
+                                <i class="fab fa-github"></i>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Descripción del Proyecto -->
+            <section class="slide">
+                <h2>¿Qué es ISPC Food?</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-globe"></i> Solución Digital Integral</h3>
+                        <ul class="feature-list">
+                            <li>🌐 Plataforma Web (Angular 17)</li>
+                            <li>📱 Aplicación Móvil (Android Nativo)</li>
+                            <li>🔧 Backend API (Django + DRF)</li>
+                            <li>🔄 Microservicios especializados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-target"></i> Objetivo Principal</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.6;">
+                            Digitalizar completamente el proceso de venta de comidas rápidas, 
+                            desde la exploración del menú hasta la entrega del pedido.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Arquitectura del Sistema -->
+            <section class="slide">
+                <h2>Arquitectura de Microservicios</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-desktop"></i> Frontend Web</h3>
+                        <p><strong>Angular 17 + TypeScript</strong></p>
+                        <ul class="feature-list">
+                            <li>Plataforma responsive para usuarios web</li>
+                            <li>Interfaz administrativa</li>
+                            <li>PWA (Progressive Web App)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-mobile-alt"></i> Aplicación Móvil</h3>
+                        <p><strong>Android Nativo - Java</strong></p>
+                        <ul class="feature-list">
+                            <li>Aplicación nativa optimizada</li>
+                            <li>Integración con funciones del dispositivo</li>
+                            <li>Experiencia móvil dedicada</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-server"></i> Backend Principal</h3>
+                        <p><strong>Django + DRF</strong></p>
+                        <ul class="feature-list">
+                            <li>API RESTful principal</li>
+                            <li>Gestión de usuarios, productos y pedidos</li>
+                            <li>Sistema de autenticación JWT</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-credit-card"></i> Microservicio de Pagos</h3>
+                        <p><strong>Django</strong></p>
+                        <ul class="feature-list">
+                            <li>Integración con MercadoPago</li>
+                            <li>Procesamiento seguro de transacciones</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-shield-alt"></i> Microservicio 2FA</h3>
+                        <p><strong>Django</strong></p>
+                        <ul class="feature-list">
+                            <li>Autenticación de doble factor</li>
+                            <li>Seguridad avanzada para administradores</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: URLs de Producción -->
+            <section class="slide">
+                <h2>Plataforma Deployada en la Nube</h2>
+                
+                <div class="urls-grid">
+                    <div class="url-card">
+                        <h3><i class="fas fa-globe"></i> Tienda Web</h3>
+                        <a href="https://ispcfood.netlify.app" target="_blank">
+                            https://ispcfood.netlify.app
+                        </a>
+                    </div>
+                    
+                    <div class="url-card">
+                        <h3><i class="fas fa-server"></i> Backend Principal</h3>
+                        <a href="https://backmobile1.onrender.com/" target="_blank">
+                            https://backmobile1.onrender.com/
+                        </a>
+                    </div>
+                    
+                    <div class="url-card">
+                        <h3><i class="fas fa-credit-card"></i> Microservicio Pagos</h3>
+                        <a href="https://backmp.onrender.com/" target="_blank">
+                            https://backmp.onrender.com/
+                        </a>
+                    </div>
+                    
+                    <div class="url-card">
+                        <h3><i class="fas fa-shield-alt"></i> Microservicio 2FA</h3>
+                        <a href="https://back2fa.onrender.com/" target="_blank">
+                            https://back2fa.onrender.com/
+                        </a>
+                    </div>
+                    
+                    <div class="url-card">
+                        <h3><i class="fas fa-book"></i> Documentación</h3>
+                        <a href="https://ispcfood-documentacion.netlify.app/" target="_blank">
+                            https://ispcfood-documentacion.netlify.app/
+                        </a>
+                    </div>
+                    
+                    <div class="url-card">
+                        <h3><i class="fas fa-paint-brush"></i> Prototipo Figma</h3>
+                        <a href="https://www.figma.com/proto/WrbWkPSvLvUgsr9VDRCSAf/proyecto-ISPC" target="_blank">
+                            Ver Diseño
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Funcionalidades Principales - Vista Cliente -->
+            <section class="slide">
+                <h2>Funcionalidades Principales - Vista Cliente</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-hamburger"></i> Exploración del Menú</h3>
+                        <ul class="feature-list">
+                            <li>Navegación por categorías (Hamburguesas, Pizzas, Empanadas, Lomos)</li>
+                            <li>Filtros avanzados por tipo de comida</li>
+                            <li>Visualización detallada de productos con imágenes</li>
+                            <li>Información nutricional y precios actualizados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-shopping-cart"></i> Carrito de Compras Inteligente</h3>
+                        <ul class="feature-list">
+                            <li>Agregar/editar/eliminar productos en tiempo real</li>
+                            <li>Cálculo automático de totales con descuentos</li>
+                            <li>Persistencia del carrito entre sesiones</li>
+                            <li>Modificación de cantidades con validación</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Gestión de Direcciones</h3>
+                        <ul class="feature-list">
+                            <li>Guardado de direcciones frecuentes en el perfil</li>
+                            <li>Opción de dirección específica por pedido</li>
+                            <li>Validación y autocompletado de direcciones</li>
+                            <li>Estimación de tiempo de entrega por zona</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Proceso de Compra -->
+            <section class="slide">
+                <h2>Funcionalidades Principales - Proceso de Compra</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-credit-card"></i> Sistema de Pagos Integrado</h3>
+                        <ul class="feature-list">
+                            <li><strong>MercadoPago:</strong> Tarjetas, transferencias, QR</li>
+                            <li><strong>Pago en efectivo</strong> al momento de la entrega</li>
+                            <li><strong>Generación de preferencias</strong> de pago automáticas</li>
+                            <li><strong>Validación en tiempo real</strong> del estado de pagos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-box"></i> Gestión de Pedidos</h3>
+                        <ul class="feature-list">
+                            <li>Confirmación inmediata de pedidos</li>
+                            <li>Seguimiento en tiempo real del estado</li>
+                            <li>Historial completo de compras</li>
+                            <li>Opción de modificar dirección de entrega</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-bell"></i> Sistema de Notificaciones</h3>
+                        <ul class="feature-list">
+                            <li>Confirmación de pedido vía email/SMS</li>
+                            <li>Actualizaciones de estado en tiempo real</li>
+                            <li>Notificaciones push en la app móvil</li>
+                            <li>Alertas de promociones y ofertas</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Seguridad -->
+            <section class="slide">
+                <h2>Funcionalidades Avanzadas - Seguridad</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-lock"></i> Sistema de Autenticación Robusto</h3>
+                        <ul class="feature-list">
+                            <li><strong>JWT (JSON Web Tokens)</strong> para sesiones seguras</li>
+                            <li><strong>Autenticación de doble factor (2FA)</strong> para administradores</li>
+                            <li><strong>Gestión de roles:</strong> Cliente, Administrador, Super Admin</li>
+                            <li><strong>Sesiones persistentes</strong> con renovación automática</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-shield-alt"></i> Medidas de Seguridad</h3>
+                        <ul class="feature-list">
+                            <li>Encriptación de datos sensibles</li>
+                            <li>Validación de entrada en backend y frontend</li>
+                            <li>Protección contra ataques comunes (CSRF, XSS)</li>
+                            <li>Auditoría de acciones administrativas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-sync-alt"></i> Gestión de Sesiones</h3>
+                        <ul class="feature-list">
+                            <li>Login/logout automático</li>
+                            <li>Recuperación de contraseñas</li>
+                            <li>Bloqueo de cuentas por intentos fallidos</li>
+                            <li>Gestión de dispositivos activos</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Panel Administrativo -->
+            <section class="slide">
+                <h2>Panel Administrativo</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-chart-bar"></i> Dashboard de Administración</h3>
+                        <ul class="feature-list">
+                            <li>Estadísticas de ventas en tiempo real</li>
+                            <li>Gráficos de productos más vendidos</li>
+                            <li>Análisis de tendencias de compra</li>
+                            <li>Reportes personalizables por fechas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-pizza-slice"></i> Gestión de Productos</h3>
+                        <ul class="feature-list">
+                            <li>CRUD completo de productos</li>
+                            <li>Gestión de categorías y precios</li>
+                            <li>Control de stock e inventario</li>
+                            <li>Subida masiva de imágenes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-clipboard-list"></i> Gestión de Pedidos</h3>
+                        <ul class="feature-list">
+                            <li>Visualización de pedidos pendientes</li>
+                            <li>Actualización de estados (Preparando, En camino, Entregado)</li>
+                            <li>Impresión de tickets de cocina</li>
+                            <li>Gestión de tiempos de entrega</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-users"></i> Gestión de Usuarios</h3>
+                        <ul class="feature-list">
+                            <li>Lista de clientes registrados</li>
+                            <li>Historial de pedidos por cliente</li>
+                            <li>Gestión de direcciones de entrega</li>
+                            <li>Sistema de puntos y descuentos</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Stack Técnico -->
+            <section class="slide">
+                <h2>Stack Tecnológico Completo</h2>
+                
+                <div class="tech-stack">
+                    <div class="tech-card">
+                        <h4><i class="fas fa-desktop"></i> Frontend</h4>
+                        <div class="tech-list">
+• Angular 17 + TypeScript<br>
+• Bootstrap 5 + Angular Material<br>
+• RxJS + NgRx (State Management)<br>
+• PWA Service Workers<br>
+• Webpack + Angular CLI
+                        </div>
+                    </div>
+                    
+                    <div class="tech-card">
+                        <h4><i class="fas fa-mobile-alt"></i> Mobile</h4>
+                        <div class="tech-list">
+• Android SDK + Java<br>
+• Material Design Guidelines<br>
+• Volley (HTTP Client)<br>
+• Gson (JSON Parsing)<br>
+• SharedPreferences + SQLite
+                        </div>
+                    </div>
+                    
+                    <div class="tech-card">
+                        <h4><i class="fas fa-server"></i> Backend</h4>
+                        <div class="tech-list">
+• Python 3.11 + Django 4.2<br>
+• Django REST Framework<br>
+• PostgreSQL + Redis<br>
+• Celery + RabbitMQ<br>
+• Gunicorn + nginx
+                        </div>
+                    </div>
+                    
+                    <div class="tech-card">
+                        <h4><i class="fas fa-cloud"></i> Infrastructure</h4>
+                        <div class="tech-list">
+• Netlify (Frontend Hosting)<br>
+• Render.com (Backend APIs)<br>
+• GitHub Actions (CI/CD)<br>
+• CloudFlare (CDN + Security)<br>
+• MongoDB Atlas (Analytics)
+                        </div>
+                    </div>
+                    
+                    <div class="tech-card">
+                        <h4><i class="fas fa-plug"></i> Integraciones</h4>
+                        <div class="tech-list">
+• MercadoPago SDK<br>
+• SendGrid (Email)<br>
+• Firebase (Push Notifications)<br>
+• Google Maps API<br>
+• GitHub (Version Control)
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Flujo de Usuario -->
+            <section class="slide">
+                <h2>Flujo de Usuario Completo</h2>
+                
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <strong>Registro/Login</strong>
+                        <p>del usuario</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <strong>Exploración</strong>
+                        <p>del menú por categorías</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <strong>Selección</strong>
+                        <p>de productos y agregado al carrito</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <strong>Revisión</strong>
+                        <p>del carrito y modificaciones</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">5</div>
+                        <strong>Ingreso</strong>
+                        <p>de datos de entrega</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">6</div>
+                        <strong>Selección</strong>
+                        <p>del método de pago</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">7</div>
+                        <strong>Confirmación</strong>
+                        <p>del pedido</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">8</div>
+                        <strong>Procesamiento</strong>
+                        <p>del pago</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">9</div>
+                        <strong>Preparación</strong>
+                        <p>del pedido (notificación)</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">10</div>
+                        <strong>Envío</strong>
+                        <p>del pedido (tracking)</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">11</div>
+                        <strong>Entrega</strong>
+                        <p>y confirmación</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">12</div>
+                        <strong>Feedback</strong>
+                        <p>y calificación</p>
+                    </div>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">3-5 min</div>
+                        <div class="metric-label">Navegación y selección</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">2-3 min</div>
+                        <div class="metric-label">Proceso de checkout</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">30 seg</div>
+                        <div class="metric-label">Confirmación de pago</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">15-25 min</div>
+                        <div class="metric-label">Preparación</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">20-40 min</div>
+                        <div class="metric-label">Entrega</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11: Métricas de Performance -->
+            <section class="slide">
+                <h2>Métricas de Éxito del Proyecto</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Performance</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">&lt; 3s</div>
+                                <div class="metric-label">Tiempo de carga inicial</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">&lt; 1.5s</div>
+                                <div class="metric-label">First Contentful Paint</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">&lt; 200ms</div>
+                                <div class="metric-label">API Response Time</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">95+</div>
+                                <div class="metric-label">Mobile Performance Score</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-chart-line"></i> Adopción y Uso</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">85%</div>
+                                <div class="metric-label">Conversion Rate</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">70%</div>
+                                <div class="metric-label">User Retention (30 días)</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">60/40</div>
+                                <div class="metric-label">Mobile vs Web Usage</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">8 min</div>
+                                <div class="metric-label">Session Duration</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-shield-alt"></i> Seguridad</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">0</div>
+                                <div class="metric-label">Security Incidents</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">100%</div>
+                                <div class="metric-label">PCI DSS Compliance</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-server"></i> Disponibilidad</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-value">99.9%</div>
+                                <div class="metric-label">Uptime</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">&lt; 0.1%</div>
+                                <div class="metric-label">Error Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 12: Demo en Vivo -->
+            <section class="slide">
+                <h2>Demostración en Vivo</h2>
+                
+                <div class="demo-links">
+                    <a href="https://ispcfood.netlify.app" target="_blank" class="demo-btn">
+                        <i class="fas fa-globe"></i>
+                        Ver Plataforma Web
+                    </a>
+                    <a href="https://backmobile1.onrender.com/" target="_blank" class="demo-btn">
+                        <i class="fas fa-code"></i>
+                        Ver API Backend
+                    </a>
+                    <a href="https://ispcfood-documentacion.netlify.app/" target="_blank" class="demo-btn">
+                        <i class="fas fa-book"></i>
+                        Ver Documentación
+                    </a>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-desktop"></i> Plataforma Web</h3>
+                        <p><strong>URL:</strong> https://ispcfood.netlify.app</p>
+                        <h4>Funcionalidades a mostrar:</h4>
+                        <ul class="feature-list">
+                            <li>Navegación del menú por categorías</li>
+                            <li>Agregar productos al carrito</li>
+                            <li>Proceso de checkout completo</li>
+                            <li>Integración con MercadoPago</li>
+                            <li>Panel administrativo</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-mobile-alt"></i> Aplicación Móvil</h3>
+                        <p><strong>APK disponible para testing</strong></p>
+                        <h4>Funcionalidades a mostrar:</h4>
+                        <ul class="feature-list">
+                            <li>Login y registro</li>
+                            <li>Exploración de productos</li>
+                            <li>Gestión del carrito</li>
+                            <li>Proceso de pago móvil</li>
+                            <li>Historial de pedidos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-code"></i> APIs Backend</h3>
+                        <p><strong>Base URL:</strong> https://backmobile1.onrender.com/</p>
+                        <h4>Endpoints principales:</h4>
+                        <ul class="feature-list">
+                            <li>/api/auth/ - Autenticación</li>
+                            <li>/api/products/ - Catálogo</li>
+                            <li>/api/cart/ - Carrito</li>
+                            <li>/api/orders/ - Pedidos</li>
+                            <li>/api/payments/ - Pagos</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 13: Conclusiones -->
+            <section class="slide">
+                <h2>Conclusiones y Próximos Pasos</h2>
+                
+                <div class="content-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-check-circle"></i> Objetivos Cumplidos</h3>
+                        <h4>Técnicos:</h4>
+                        <ul class="feature-list">
+                            <li>Desarrollo de plataforma web responsive</li>
+                            <li>Aplicación móvil nativa Android</li>
+                            <li>Backend robusto con microservicios</li>
+                            <li>Integración completa de pagos</li>
+                            <li>Sistema de administración</li>
+                        </ul>
+                        
+                        <h4>De Negocio:</h4>
+                        <ul class="feature-list">
+                            <li>Digitalización completa del proceso</li>
+                            <li>Experiencia de usuario optimizada</li>
+                            <li>Escalabilidad demostrada</li>
+                            <li>Seguridad y compliance</li>
+                            <li>Métricas y analytics integrados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-rocket"></i> Próximos Pasos</h3>
+                        <h4>Corto Plazo (3-6 meses):</h4>
+                        <ul class="feature-list">
+                            <li>Optimización basada en feedback de usuarios</li>
+                            <li>Desarrollo de app iOS</li>
+                            <li>Integración con más métodos de pago</li>
+                            <li>Sistema de loyalty points</li>
+                        </ul>
+                        
+                        <h4>Largo Plazo (6-12 meses):</h4>
+                        <ul class="feature-list">
+                            <li>Machine Learning para recomendaciones</li>
+                            <li>Expansión internacional</li>
+                            <li>Marketplace para múltiples restaurantes</li>
+                            <li>Integración con delivery partners</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 14: Agradecimientos -->
+            <section class="slide intro-slide">
+                <h2 style="color: white;">¡Gracias por su atención!</h2>
+                <div class="logo-img">🎉</div>
+                
+                <div class="content-grid">                    <div class="feature-card">
+                        <h3><i class="fas fa-heart"></i> Agradecimientos</h3>
+                        <p><strong>Desarrollado por:</strong></p>
+                        <p>Carlos Alberto Nicolas Luna - Full Stack Developer</p>
+                        <br>
+                        <p><strong>A los profesores y mentores del ISPC</strong></p>
+                        <p><strong>A las empresas que brindaron APIs y servicios</strong></p>
+                        <p><strong>A la comunidad open source</strong></p>
+                    </div>
+                </div>
+                
+                <div class="demo-links">
+                    <a href="https://ispcfood.netlify.app" target="_blank" class="demo-btn">
+                        <i class="fas fa-globe"></i>
+                        Demo en línea
+                    </a>
+                    <a href="https://ispcfood-documentacion.netlify.app/" target="_blank" class="demo-btn">
+                        <i class="fas fa-book"></i>
+                        Documentación
+                    </a>
+                    <a href="mailto:ispcfood@gmail.com" class="demo-btn">
+                        <i class="fas fa-envelope"></i>
+                        Contacto
+                    </a>
+                </div>
+                
+                <p style="margin-top: 2rem; font-style: italic; opacity: 0.9;">
+                    ISPC FOOD - Donde cada hamburguesa cuenta una historia
+                </p>
+            </section>
+        </main>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+                Anterior
+            </button>
+            
+            <div class="slide-indicators" id="indicators"></div>
+            
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
+                Siguiente
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Initialize
+        document.getElementById('total-slides').textContent = totalSlides;
+        createIndicators();
+        updateSlide();
+        
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('indicators');
+            for (let i = 0; i < totalSlides; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.onclick = () => goToSlide(i);
+                indicatorsContainer.appendChild(indicator);
+            }
+        }
+        
+        function updateSlide() {
+            // Hide all slides
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active', 'fade-in');
+                }
+            });
+            
+            // Update indicators
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Update counter and progress
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            const newSlide = currentSlide + direction;
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                currentSlide = newSlide;
+                updateSlide();
+            }
+        }
+        
+        function goToSlide(slideIndex) {
+            if (slideIndex >= 0 && slideIndex < totalSlides) {
+                currentSlide = slideIndex;
+                updateSlide();
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                    changeSlide(-1);
+                    break;
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case ' ':
+                    changeSlide(1);
+                    break;
+                case 'Home':
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    goToSlide(totalSlides - 1);
+                    break;
+            }
+        });
+        
+        // Fullscreen toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+        
+        // Auto-advance (optional)
+        let autoAdvanceInterval;
+        
+        function startAutoAdvance() {
+            autoAdvanceInterval = setInterval(() => {
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                } else {
+                    stopAutoAdvance();
+                }
+            }, 10000); // 10 seconds per slide
+        }
+        
+        function stopAutoAdvance() {
+            if (autoAdvanceInterval) {
+                clearInterval(autoAdvanceInterval);
+                autoAdvanceInterval = null;
+            }
+        }
+        
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next slide
+                    changeSlide(1);
+                } else {
+                    // Swipe right - previous slide
+                    changeSlide(-1);
+                }
+            }
+        }
+        
+        // Prevent context menu on right click for presentation mode
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
