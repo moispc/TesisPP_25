@@ -28,7 +28,7 @@
             font-family: 'Roboto', sans-serif;
             background: var(--bg-color);
             color: var(--text-color);
-            overflow: hidden;
+            overflow: auto;
         }
 
         .presentation-container {
@@ -355,6 +355,8 @@
         }        .team-grid {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
             margin: 2rem 0;
         }        .team-member {
             background: var(--card-bg);
@@ -821,7 +823,7 @@
                             <li>CRUD completo de productos</li>
                             <li>Gestión de categorías y precios</li>
                             <li>Control de stock e inventario</li>
-                            <li>Subida masiva de imágenes</li>
+                            <li>Subida e optimización de imágenes (Cloudinary)</li>
                         </ul>
                     </div>
                     
@@ -857,8 +859,8 @@
                         <div class="tech-list">
 • Angular 17 + TypeScript<br>
 • Bootstrap 5 + Angular Material<br>
-• RxJS + NgRx (State Management)<br>
-• PWA Service Workers<br>
+• RxJS + NgRx - Próximamente<br>
+• PWA Service Workers - Próximamente<br>
 • Webpack + Angular CLI
                         </div>
                     </div>
@@ -879,8 +881,8 @@
                         <div class="tech-list">
 • Python 3.11 + Django 4.2<br>
 • Django REST Framework<br>
-• PostgreSQL + Redis<br>
-• Celery + RabbitMQ<br>
+• MySQL (Railway)<br>
+• Celery + RabbitMQ - Próximamente<br>
 • Gunicorn + nginx
                         </div>
                     </div>
@@ -890,9 +892,9 @@
                         <div class="tech-list">
 • Netlify (Frontend Hosting)<br>
 • Render.com (Backend APIs)<br>
-• GitHub Actions (CI/CD)<br>
-• CloudFlare (CDN + Security)<br>
-• MongoDB Atlas (Analytics)
+• GitHub Actions (CI/CD) - Próximamente<br>
+• CloudFlare (CDN + Security) - Próximamente<br>
+• MySQL (Railway)
                         </div>
                     </div>
                     
@@ -900,9 +902,10 @@
                         <h4><i class="fas fa-plug"></i> Integraciones</h4>
                         <div class="tech-list">
 • MercadoPago SDK<br>
-• SendGrid (Email)<br>
-• Firebase (Push Notifications)<br>
-• Google Maps API<br>
+• Cloudinary (Gestión de Imágenes)<br>
+• SendGrid (Email) - Próximamente<br>
+• Firebase (Push Notifications) - Próximamente<br>
+• Google Maps API - Próximamente<br>
 • GitHub (Version Control)
                         </div>
                     </div>
@@ -1194,14 +1197,40 @@
                 <h2 style="color: white;">¡Gracias por su atención!</h2>
                 <div class="logo-img">🎉</div>
                 
-                <div class="content-grid">                    <div class="feature-card">
+                <div class="content-grid" style="justify-items: center; margin: 1rem 0;">
+                    <div class="feature-card" style="padding: 1.5rem; max-width: 1200px; width: 100%;">
                         <h3><i class="fas fa-heart"></i> Agradecimientos</h3>
-                        <p><strong>Desarrollado por:</strong></p>
-                        <p>Carlos Alberto Nicolas Luna - Full Stack Developer</p>
-                        <br>
-                        <p><strong>A los profesores y mentores del ISPC</strong></p>
-                        <p><strong>A las empresas que brindaron APIs y servicios</strong></p>
-                        <p><strong>A la comunidad open source</strong></p>
+                        <div style="text-align: center;">
+                            <p><strong>Desarrollado por:</strong></p>
+                            <div class="team-grid" style="margin: 0.8rem 0;">
+                                <div class="team-member" style="margin: 0.3rem; width: 220px; padding: 0.6rem 1rem; text-align: center; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2); text-align: center !important;">
+                                    <i class="fas fa-laptop-code" style="font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.3rem; text-align: center; display: block; margin-left: auto; margin-right: auto;"></i>
+                                    <h4 style="font-size: 1rem; margin: 0.2rem 0; text-align: center; display: block; margin-left: auto; margin-right: auto;">Nicolas Luna</h4>
+                                    <p style="font-weight: 500; color: var(--primary-color); font-size: 0.9rem; text-align: center; display: block; margin-left: auto; margin-right: auto;">Full Stack Developer</p>
+                                </div>
+                                <div class="team-member" style="margin: 0.3rem; width: 220px; padding: 0.6rem 1rem; text-align: center; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2); text-align: center !important;">
+                                    <i class="fas fa-shopping-cart" style="font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.3rem; text-align: center; display: block; margin-left: auto; margin-right: auto;"></i>
+                                    <h4 style="font-size: 1rem; margin: 0.2rem 0; text-align: center; display: block; margin-left: auto; margin-right: auto;">Diego Guzman</h4>
+                                    <p style="font-weight: 500; color: var(--primary-color); font-size: 0.9rem; text-align: center; display: block; margin-left: auto; margin-right: auto;">IT Support</p>
+                                </div>
+                                <div class="team-member" style="margin: 0.3rem; width: 220px; padding: 0.6rem 1rem; text-align: center; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2); text-align: center !important;">
+                                    <i class="fas fa-beer" style="font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.3rem; text-align: center; display: block; margin-left: auto; margin-right: auto;"></i>
+                                    <h4 style="font-size: 1rem; margin: 0.2rem 0; text-align: center; display: block; margin-left: auto; margin-right: auto;">Veronica Ludemann</h4>
+                                    <p style="font-weight: 500; color: var(--primary-color); font-size: 0.9rem; text-align: center; display: block; margin-left: auto; margin-right: auto;">Diseñadora y QA Manual</p>
+                                </div>
+                            </div>
+                            <p><strong>Mentora del proyecto:</strong></p>
+                            <div style="display: flex; justify-content: center; margin: 0.5rem 0;">
+                                <div class="team-member" style="margin: 0.3rem; width: 220px; padding: 0.6rem 1rem; text-align: center; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); box-shadow: 0 2px 10px rgba(255, 165, 0, 0.2); text-align: center !important;">
+                                    <i class="fas fa-chalkboard-teacher" style="font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.3rem; text-align: center; display: block; margin-left: auto; margin-right: auto;"></i>
+                                    <h4 style="font-size: 1rem; margin: 0.2rem 0; text-align: center; display: block; margin-left: auto; margin-right: auto;">Viviana Andrea Guillen</h4>
+                                    <p style="font-weight: 500; color: var(--primary-color); font-size: 0.9rem; text-align: center; display: block; margin-left: auto; margin-right: auto;">Profesora y Mentora</p>
+                                </div>
+                            </div>
+                            <p style="margin-top: 0.5rem;"><strong>A los profesores y mentores del ISPC</strong></p>
+                            <p><strong>A las empresas que brindaron APIs y servicios</strong></p>
+                            <p><strong>A la comunidad open source</strong></p>
+                        </div>
                     </div>
                 </div>
                 
